@@ -1,0 +1,135 @@
+@startuml DiagrammeCasUtilisation_LoveLetter
+
+title Diagramme de Cas d'Utilisation - Love Letter - Groupe 30
+
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecase {
+    BackgroundColor PaleGreen
+    BorderColor DarkGreen
+    ArrowColor DarkGreen
+    FontSize 10
+}
+skinparam defaultFontSize 10
+skinparam noteFontSize 9
+skinparam padding 2
+skinparam nodesep 10
+skinparam ranksep 20
+
+left to right direction
+
+actor "Joueur" as J #LightBlue
+actor "Systeme" as S #LightCoral
+
+rectangle "Gestion Partie" {
+    usecase "Creer partie" as UC_CreerPartie
+    usecase "Config joueurs" as UC_ConfigJoueurs
+    usecase "Sauvegarder" as UC_Sauvegarder
+    usecase "Charger" as UC_Charger
+}
+
+rectangle "Consultation" {
+    usecase "Voir main" as UC_VoirMain
+    usecase "Cartes jouees" as UC_VoirCartesJouees
+    usecase "Carte aide" as UC_CarteAide
+    usecase "Voir scores" as UC_VoirScores
+}
+
+rectangle "Tour" {
+    usecase "Debut tour" as UC_DebutTour
+    usecase "Piocher" as UC_Piocher
+    usecase "Jouer carte" as UC_JouerCarte
+    usecase "Choisir cible" as UC_ChoisirCible
+    usecase "Deviner carte" as UC_DevinerCarte
+    usecase "Contrainte LA" as UC_ContrainteLA
+}
+
+rectangle "Effets" {
+    usecase "Effet" as UC_Effet
+    usecase "Auto-elim" as UC_AutoElim
+    usecase "Sans effet" as UC_SansEffet
+    usecase "Echanger" as UC_Echanger
+    usecase "Piocher 2\ncartes" as UC_Ancien
+    usecase "Defausse" as UC_Bug
+    usecase "Proteger" as UC_Proteger
+    usecase "Comparer" as UC_Comparer
+    usecase "Voir main\nadversaire" as UC_VoirAdversaire
+    usecase "Deviner" as UC_Exam
+    usecase "Bonus" as UC_B2
+    usecase "Eliminer" as UC_Eliminer
+}
+
+rectangle "Fin" {
+    usecase "Verif fin manche" as UC_VerifFinManche
+    usecase "Calc points" as UC_CalculPoints
+    usecase "Verif B2" as UC_VerifB2
+    usecase "Vainqueur manche" as UC_VainqueurManche
+    usecase "Verif victoire" as UC_VerifVictoire
+    usecase "Fin partie" as UC_FinPartie
+}
+
+J -- UC_CreerPartie #LightBlue
+J -- UC_ConfigJoueurs #LightBlue
+J -- UC_Sauvegarder #LightBlue
+J -- UC_Charger #LightBlue
+J -- UC_VoirMain #LightBlue
+J -- UC_VoirCartesJouees #LightBlue
+J -- UC_CarteAide #LightBlue
+J -- UC_VoirScores #LightBlue
+J -- UC_DebutTour #LightBlue
+J -- UC_JouerCarte #LightBlue
+
+UC_Piocher -- S #LightCoral
+UC_ContrainteLA -- S #LightCoral
+UC_Effet -- S #LightCoral
+UC_Eliminer -- S #LightCoral
+UC_VerifFinManche -- S #LightCoral
+UC_CalculPoints -- S #LightCoral
+UC_VerifB2 -- S #LightCoral
+UC_VainqueurManche -- S #LightCoral
+UC_VerifVictoire -- S #LightCoral
+UC_FinPartie -- S #LightCoral
+
+UC_DebutTour ..> UC_Piocher : <<include>>
+UC_JouerCarte <.. UC_ContrainteLA : <<extend>>
+UC_JouerCarte ..> UC_Effet : <<include>>
+UC_VainqueurManche ..> UC_CalculPoints : <<include>>
+UC_VainqueurManche ..> UC_VerifB2 : <<include>>
+
+UC_ChoisirCible ..> UC_JouerCarte : <<extend>>
+UC_DevinerCarte ..> UC_JouerCarte : <<extend>>
+
+UC_AutoElim --|> UC_Effet
+UC_SansEffet --|> UC_Effet
+UC_Echanger --|> UC_Effet
+UC_Ancien --|> UC_Effet
+UC_Bug --|> UC_Effet
+UC_Proteger --|> UC_Effet
+UC_Comparer --|> UC_Effet
+UC_VoirAdversaire --|> UC_Effet
+UC_Exam --|> UC_Effet
+UC_B2 --|> UC_Effet
+
+UC_Comparer ..> UC_Eliminer : <<include>>
+UC_Exam ..> UC_Eliminer : <<include>>
+UC_Bug ..> UC_Eliminer : <<include>>
+UC_AutoElim ..> UC_Eliminer : <<include>>
+
+note right of UC_ContrainteLA
+  LA + (Directeur/Bug Info)
+  doit jouer LA
+end note
+
+note left of UC_B2
+  Bonus de +1 pion si le joueur
+  est le seul à avoir joué B2
+  et est encore en lice
+end note
+
+note bottom of UC_VerifFinManche
+  Conditions:
+  - Un seul joueur restant
+  - Deck épuisé
+end note
+
+@enduml
