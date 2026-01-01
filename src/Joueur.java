@@ -14,17 +14,7 @@ public class Joueur {
 
 	private boolean estElimine;
 
-	private Main main;
-
-	private Partie partie;
-
-	private Partie partie;
-
-	private ActionJoueur actionJoueur;
-
-	private Manche manche;
-
-	private Collection<Carte> carte;
+    public Joueur(String nom, Main main) {}
 
 	public String getNom() {
 		return null;

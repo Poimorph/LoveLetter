@@ -1,8 +1,10 @@
+import java.util.*;
+
 public class Deck {
 
-	private List<Carte> cartes;
+	private ArrayList<Carte> cartes;
 
-	private List<Carte> defausse;
+	private ArrayList<Carte> defausse;
 
 	private Carte carteCachee;
 
@@ -28,7 +30,7 @@ public class Deck {
 		return null;
 	}
 
-	public List<Carte> piocherMultiple(int nombre) {
+	public ArrayList<Carte> piocherMultiple(int nombre) {
 		return null;
 	}
 
@@ -44,7 +46,7 @@ public class Deck {
 		return null;
 	}
 
-	public void ajouterSousPaquet(List<Carte> cartes) {
+	public void ajouterSousPaquet(ArrayList<Carte> cartes) {
 
 	}
 
@@ -60,7 +62,7 @@ public class Deck {
 		return 0;
 	}
 
-	public List<Carte> getDefausse() {
+	public ArrayList<Carte> getDefausse() {
 		return null;
 	}
 
@@ -68,7 +70,7 @@ public class Deck {
 		return null;
 	}
 
-	public List<Carte> getCartesVisibles() {
+	public ArrayList<Carte> getCartesVisibles() {
 		return null;
 	}
 

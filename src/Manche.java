@@ -1,14 +1,16 @@
+import java.util.*;
+
 public class Manche {
 
 	private Deck deck;
 
-	private List<Joueur> joueurActifs;
+	private ArrayList<Joueur> joueurActifs;
 
 	private int joueurActifIndex;
 
 	private Carte carteCachee;
 
-	private set<Joueur> joueursAyantJoueB2;
+	private ArrayList<Joueur> joueursAyantJoueB2;
 
 	private boolean estTerminee;
 
@@ -24,7 +26,7 @@ public class Manche {
 
 	private Carte carte;
 
-	public Manche(List<Joueur> joueurs) {
+	public Manche(ArrayList<Joueur> joueurs) {
 
 	}
 
@@ -52,7 +54,7 @@ public class Manche {
 		return false;
 	}
 
-	public List<Joueur> determinerVainqueurs() {
+	public ArrayList<Joueur> determinerVainqueurs() {
 		return null;
 	}
 
@@ -64,7 +66,7 @@ public class Manche {
 		return null;
 	}
 
-	public List<Joueur> getJoueursActifs() {
+	public ArrayList<Joueur> getJoueursActifs() {
 		return null;
 	}
 
@@ -80,7 +82,7 @@ public class Manche {
 		return null;
 	}
 
-	public List<Carte> getCartesVisibles() {
+	public ArrayList<Carte> getCartesVisibles() {
 		return null;
 	}
 
@@ -88,7 +90,7 @@ public class Manche {
 		return false;
 	}
 
-	public List<Joueur> getJoueursCiblables(Joueur joueurActif) {
+	public ArrayList<Joueur> getJoueursCiblables(Joueur joueurActif) {
 		return null;
 	}
 

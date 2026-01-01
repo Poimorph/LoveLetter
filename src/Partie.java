@@ -1,8 +1,8 @@
-import java.util.Collection;
+import java.util.*;
 
 public class Partie {
 
-	private List<Joueur> joueurs;
+	private ArrayList<Joueur> joueurs;
 
 	private Manche mancheActuelle;
 
@@ -14,32 +14,47 @@ public class Partie {
 
 	private int pionsRequis;
 
-	private Joueur joueur;
+    private ArrayList<Manche> manches;
 
-	private Collection<Joueur> joueur;
-
-	private Collection<Manche> manche;
-
-	private Collection<Manche> manche;
-
-	private EtatPartie etatPartie;
-
-	private ControleurPartie controleurPartie;
-
-	public Partie() {
+	public Partie(int nbJoueurs) {
+            joueurs = new ArrayList<>();
+            numeroManche = 0;
+            etat = EtatPartie.En_Cours;
+            switch (nbJoueurs) {
+                case 2:
+                    pionsRequis = 6;
+                    break;
+                case 3:
+                    pionsRequis = 5;
+                    break;
+                case 4:
+                    pionsRequis = 4;
+                    break;
+                case 5:
+                    pionsRequis = 3;
+                    break;
+                case 6:
+                    pionsRequis = 3;
+                    break;
+                default:
+                    System.out.println("Erreur de nombre de joueurs");
+            }
+            manches = new ArrayList<>();
 
 	}
 
-	public Partie {static} getInstance() {
-		return null;
-	}
+	public void initialiser(ArrayList<String> nomsJoueurs) {
 
-	public void initialiser(List<String> nomsJoueurs) {
-
+            for(int i = 0; i < nombreJoueurs; i++) {
+                joueurs.add(new Joueur(nomsJoueurs.get(i),new Main()));
+            }
 	}
 
 	public void demarrerPartie() {
-
+        mancheActuelle = new Manche(joueurs);
+        manches.add(mancheActuelle);
+        //TODO
+        // reste
 	}
 
 	public void lancerNouvelleManche() {
@@ -50,8 +65,14 @@ public class Partie {
 		return null;
 	}
 
-	public List<Joueur> verifierVictoireFinale() {
-		return null;
+	public ArrayList<Joueur> verifierVictoireFinale() {
+		boolean fin = false;
+        for (Joueur joueur : joueurs)
+            if (joueur.getPionsFaveur() >= pionsRequis)
+                fin = true;
+
+        return fin ? joueurs : null;
+        // TODO revoir logique
 	}
 
 	public void terminerPartie() {
@@ -62,28 +83,28 @@ public class Partie {
 
 	}
 
-	public List<Joueur> getJoueurs() {
-		return null;
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
 	}
 
 	public Manche getMancheActuelle() {
-		return null;
+		return mancheActuelle;
 	}
 
 	public int getNumeroManche() {
-		return 0;
+		return numeroManche;
 	}
 
 	public EtatPartie getEtat() {
-		return null;
+		return etat;
 	}
 
 	public int getNombreJoueurs() {
-		return 0;
+		return nombreJoueurs;
 	}
 
 	public int getPionsRequis() {
-		return 0;
+		return pionsRequis;
 	}
 
 }
