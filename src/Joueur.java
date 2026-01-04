@@ -250,32 +250,6 @@ public class Joueur {
         return main.getNombreCartes() == Main.TAILLE_MAX;
     }
 
-
-	public String getNom() {
-		return null;
-	}
-
-	public Main getMain() {
-		return null;
-	}
-
-	public List<Carte> getCartesJouees() {
-		return null;
-	}
-
-	public int getPionsFaveur() {
-		return 0;
-	}
-
-	public boolean isProtege() {
-		return false;
-	}
-
-	public boolean isElimine() {
-		return false;
-	}
-
-
 // ==================== AFFICHAGE ====================
 
     /**
@@ -327,4 +301,31 @@ public class Joueur {
     public int hashCode() {
         return nom.hashCode();
     }
+
+    // =============== ACCESSEURS ================
+	public String getNom() {
+		return null;
+	}
+
+	public Main getMain() {
+		return null;
+	}
+
+	public List<Carte> getCartesJouees() {
+		return null;
+	}
+
+	public int getPionsFaveur() {
+		return 0;
+	}
+
+	public boolean isProtege() {
+		return false;
+	}
+
+	public boolean isElimine() {
+		return false;
+	}
+
+
 }
