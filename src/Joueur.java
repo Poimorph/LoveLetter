@@ -114,14 +114,14 @@ public class Joueur {
 
     /**
      * Vérifie si le joueur doit obligatoirement jouer LA (contrainte LA)
-     * Le joueur doit jouer LA s'il a LA + (Directeur ou Bug Informatique) en main
+     * Le joueur doit jouer LA s'il a LA + Roi (Directeur) ou LA + Prince (Bug Informatique) en main
      */
     public boolean doitJouerLA() {
         boolean aLA = aCarteEnMain(TypeCarte.LA);
-        boolean aDirecteur = aCarteEnMain(TypeCarte.DIRLO);
-        boolean aBugInfo = aCarteEnMain(TypeCarte.BUG_INFORMATIQUE);
+        boolean aRoi = aCarteEnMain(TypeCarte.DIRLO);           // Directeur = Roi
+        boolean aPrince = aCarteEnMain(TypeCarte.BUG_INFORMATIQUE); // Bug Informatique = Prince
 
-        return aLA && (aDirecteur || aBugInfo);
+        return aLA && (aRoi || aPrince);
     }
 
     /**
@@ -155,7 +155,7 @@ public class Joueur {
     }
 
     /**
-     * Active la protection du joueur (effet Ancien Élève)
+     * Active la protection du joueur (effet Règlement des Études)
      */
     public void activerProtection() {
         this.estProtege = true;
@@ -304,27 +304,27 @@ public class Joueur {
 
     // =============== ACCESSEURS ================
 	public String getNom() {
-		return null;
+		return nom;
 	}
 
 	public Main getMain() {
-		return null;
+		return main;
 	}
 
-	public List<Carte> getCartesJouees() {
-		return null;
+	public ArrayList<Carte> getCartesJouees() {
+		return cartesJouees;
 	}
 
 	public int getPionsFaveur() {
-		return 0;
+		return pionsFaveur;
 	}
 
 	public boolean isProtege() {
-		return false;
+		return estProtege;
 	}
 
 	public boolean isElimine() {
-		return false;
+		return estElimine;
 	}
 
 
