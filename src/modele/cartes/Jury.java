@@ -1,3 +1,11 @@
+package modele.cartes;
+
+import modele.ActionJoueur;
+import modele.Carte;
+import modele.Joueur;
+import modele.Manche;
+import modele.TypeCarte;
+
 /**
  * Jury (Baron) - Valeur 3
  * Effet : Comparez votre carte en main avec celle d'un adversaire.
@@ -8,11 +16,13 @@ public class Jury extends Carte {
 
 	public Jury() {
 		super(TypeCarte.JURY, 3, "Jury",
-			"Comparez votre main avec un adversaire. Le plus faible est éliminé.");
+				"Comparez votre main avec un adversaire. Le plus faible est éliminé.");
 	}
 
 	@Override
-	public void appliquerEffet(Joueur joueurActif, Joueur cible, Manche manche) {
+	public void appliquerEffet(ActionJoueur action, Manche manche) {
+		Joueur joueurActif = action.getJoueur();
+		Joueur cible = action.getCible();
 		if (cible == null) {
 			System.out.println("Aucune cible valide.");
 			return;
@@ -22,7 +32,7 @@ public class Jury extends Carte {
 		int valeurCible = cible.getValeurMain();
 
 		System.out.println(joueurActif.getNom() + " (valeur " + valeurJoueurActif + ") vs "
-			+ cible.getNom() + " (valeur " + valeurCible + ")");
+				+ cible.getNom() + " (valeur " + valeurCible + ")");
 
 		if (valeurJoueurActif > valeurCible) {
 			System.out.println(cible.getNom() + " a la carte la plus faible et est éliminé !");

@@ -1,3 +1,11 @@
+package modele.cartes;
+
+import modele.ActionJoueur;
+import modele.Carte;
+import modele.Joueur;
+import modele.Manche;
+import modele.TypeCarte;
+
 /**
  * Exam (Garde) - Valeur 1
  * Effet : Devinez la carte d'un adversaire (sauf Exam).
@@ -9,11 +17,15 @@ public class Exam extends Carte {
 
 	public Exam() {
 		super(TypeCarte.EXAM, 1, "Exam",
-			"Devinez la carte d'un adversaire (sauf Exam). Si correct, il est éliminé.");
+				"Devinez la carte d'un adversaire (sauf Exam). Si correct, il est éliminé.");
 	}
 
 	@Override
-	public void appliquerEffet(Joueur joueurActif, Joueur cible, Manche manche) {
+	public void appliquerEffet(ActionJoueur action, Manche manche) {
+		Joueur joueurActif = action.getJoueur();
+		Joueur cible = action.getCible();
+		TypeCarte carteDevinee = action.getCarteDevinee();
+
 		if (cible == null || carteDevinee == null) {
 			return;
 		}
@@ -27,11 +39,11 @@ public class Exam extends Carte {
 		// Vérifier si la cible a la carte devinée
 		if (cible.aCarteEnMain(carteDevinee)) {
 			System.out.println(joueurActif.getNom() + " a deviné correctement ! "
-				+ cible.getNom() + " avait " + carteDevinee + " et est éliminé !");
+					+ cible.getNom() + " avait " + carteDevinee + " et est éliminé !");
 			manche.eliminerJoueur(cible);
 		} else {
 			System.out.println(joueurActif.getNom() + " a deviné " + carteDevinee
-				+ " mais c'était incorrect.");
+					+ " mais c'était incorrect.");
 		}
 	}
 
@@ -42,6 +54,7 @@ public class Exam extends Carte {
 
 	/**
 	 * Définit la carte que le joueur devine
+	 * 
 	 * @param type Le type de carte deviné (ne peut pas être EXAM)
 	 */
 	public void setCarteDevinee(TypeCarte type) {

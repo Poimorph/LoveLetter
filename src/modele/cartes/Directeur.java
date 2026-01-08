@@ -1,3 +1,11 @@
+package modele.cartes;
+
+import modele.ActionJoueur;
+import modele.Carte;
+import modele.Joueur;
+import modele.Manche;
+import modele.TypeCarte;
+
 /**
  * Directeur (Roi) - Valeur 7
  * Effet : Échangez votre main avec celle d'un adversaire.
@@ -6,11 +14,13 @@ public class Directeur extends Carte {
 
 	public Directeur() {
 		super(TypeCarte.DIRLO, 7, "Directeur",
-			"Échangez votre main avec celle d'un adversaire.");
+				"Échangez votre main avec celle d'un adversaire.");
 	}
 
 	@Override
-	public void appliquerEffet(Joueur joueurActif, Joueur cible, Manche manche) {
+	public void appliquerEffet(ActionJoueur action, Manche manche) {
+		Joueur joueurActif = action.getJoueur();
+		Joueur cible = action.getCible();
 		if (cible == null) {
 			System.out.println("Aucune cible valide pour l'échange.");
 			return;

@@ -1,4 +1,14 @@
+package modele.cartes;
+
 import java.util.ArrayList;
+
+import modele.ActionJoueur;
+import modele.Carte;
+import modele.Deck;
+import modele.Joueur;
+import modele.MainJoueur;
+import modele.Manche;
+import modele.TypeCarte;
 
 /**
  * Ancien Élève (Chancelier) - Valeur 6
@@ -11,12 +21,13 @@ public class AncienEleve extends Carte {
 
 	public AncienEleve() {
 		super(TypeCarte.ANCIEN, 6, "Ancien Élève",
-			"Piochez 2 cartes, gardez-en 1, remettez les 2 autres sous le deck.");
+				"Piochez 2 cartes, gardez-en 1, remettez les 2 autres sous le deck.");
 	}
 
 	@Override
-	public void appliquerEffet(Joueur joueurActif, Joueur cible, Manche manche) {
+	public void appliquerEffet(ActionJoueur action, Manche manche) {
 		Deck deck = manche.getDeck();
+		Joueur joueurActif = action.getJoueur();
 
 		// Piocher 2 cartes du deck
 		ArrayList<Carte> cartesPiochees = deck.piocherMultiple(2);
@@ -28,10 +39,11 @@ public class AncienEleve extends Carte {
 
 		// Le joueur a maintenant sa carte en main + les 2 cartes piochées
 		// Il doit choisir 1 carte à garder parmi les 3
-		// Pour l'instant, on garde la carte avec la plus haute valeur (logique par défaut)
+		// Pour l'instant, on garde la carte avec la plus haute valeur (logique par
+		// défaut)
 		// La vraie sélection sera gérée par le contrôleur/vue
 
-		Main mainJoueur = joueurActif.getMain();
+		MainJoueur mainJoueur = joueurActif.getMain();
 		Carte carteEnMain = mainJoueur.getCarte(0);
 
 		// Créer une liste de toutes les cartes disponibles
@@ -45,10 +57,11 @@ public class AncienEleve extends Carte {
 		System.out.println("Cartes disponibles : ");
 		for (int i = 0; i < toutesLesCartes.size(); i++) {
 			System.out.println("  [" + i + "] " + toutesLesCartes.get(i).getNom()
-				+ " (Valeur: " + toutesLesCartes.get(i).getValeur() + ")");
+					+ " (Valeur: " + toutesLesCartes.get(i).getValeur() + ")");
 		}
 
-		// Garder la carte choisie (par défaut index 0, peut être changé via setCarteGardeeIndex)
+		// Garder la carte choisie (par défaut index 0, peut être changé via
+		// setCarteGardeeIndex)
 		if (carteGardeeIndex < 0 || carteGardeeIndex >= toutesLesCartes.size()) {
 			carteGardeeIndex = 0;
 		}

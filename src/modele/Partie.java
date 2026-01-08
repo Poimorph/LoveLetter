@@ -1,3 +1,5 @@
+package modele;
+
 import java.util.*;
 
 public class Partie {
@@ -58,10 +60,10 @@ public class Partie {
             case 6:
                 return 3;
             default:
-                throw new IllegalArgumentException("Nombre de joueurs invalide : " + nbJoueurs + " (doit être entre 2 et 6)");
+                throw new IllegalArgumentException(
+                        "Nombre de joueurs invalide : " + nbJoueurs + " (doit être entre 2 et 6)");
         }
     }
-
 
     /**
      * Initialise la partie avec les noms des joueurs
@@ -72,7 +74,7 @@ public class Partie {
         }
         joueurs.clear();
         for (String nom : nomsJoueurs) {
-            joueurs.add(new Joueur(nom, new Main()));
+            joueurs.add(new Joueur(nom, new MainJoueur()));
         }
     }
 
@@ -119,8 +121,11 @@ public class Partie {
         } else {
             // Manches suivantes : le vainqueur de la manche précédente
             Manche manchePrecedente = manches.get(manches.size() - 1);
-            Joueur vainqueur = manchePrecedente.getJoueurActif(); // À adapter selon votre logique
-            return vainqueur != null ? vainqueur : joueurs.get(0);
+            ArrayList<Joueur> vainqueurs = manchePrecedente.getVainqueurs();
+            if (vainqueurs != null && !vainqueurs.isEmpty()) {
+                return vainqueurs.get(0);
+            }
+            return joueurs.get(0);
         }
     }
 
@@ -136,6 +141,7 @@ public class Partie {
 
     /**
      * Vérifie si un joueur a atteint le nombre de pions requis pour gagner
+     * 
      * @return Liste des vainqueurs potentiels, null si aucun
      */
     public ArrayList<Joueur> verifierVictoireFinale() {
@@ -158,9 +164,9 @@ public class Partie {
             vainqueurFinal = vainqueurs.get(0);
         } else {
             int maxPions = pionsRequis;
-            Joueur maxJoueur=vainqueurs.get(0);
-            for(Joueur joueur : vainqueurs) {
-                if (joueur.getPionsFaveur() > maxPions){
+            Joueur maxJoueur = vainqueurs.get(0);
+            for (Joueur joueur : vainqueurs) {
+                if (joueur.getPionsFaveur() > maxPions) {
                     maxPions = joueur.getPionsFaveur();
                     maxJoueur = joueur;
                 }
@@ -230,29 +236,29 @@ public class Partie {
     }
 
     // ================ ACCESSEURS ==================
-	public ArrayList<Joueur> getJoueurs() {
-		return joueurs;
-	}
+    public ArrayList<Joueur> getJoueurs() {
+        return joueurs;
+    }
 
-	public Manche getMancheActuelle() {
-		return mancheActuelle;
-	}
+    public Manche getMancheActuelle() {
+        return mancheActuelle;
+    }
 
-	public int getNumeroManche() {
-		return numeroManche;
-	}
+    public int getNumeroManche() {
+        return numeroManche;
+    }
 
-	public EtatPartie getEtat() {
-		return etat;
-	}
+    public EtatPartie getEtat() {
+        return etat;
+    }
 
-	public int getNombreJoueurs() {
-		return nombreJoueurs;
-	}
+    public int getNombreJoueurs() {
+        return nombreJoueurs;
+    }
 
-	public int getPionsRequis() {
-		return pionsRequis;
-	}
+    public int getPionsRequis() {
+        return pionsRequis;
+    }
 
     public Joueur getVainqueurFinal() {
         return vainqueurFinal;

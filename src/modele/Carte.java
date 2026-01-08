@@ -1,3 +1,5 @@
+package modele;
+
 public abstract class Carte implements Comparable<Carte> {
 
 	protected TypeCarte type;
@@ -14,11 +16,12 @@ public abstract class Carte implements Comparable<Carte> {
 
 	/**
 	 * Applique l'effet de la carte
+	 * 
 	 * @param joueurActif Le joueur qui joue la carte
-	 * @param cible Le joueur ciblé (peut être null si pas de cible)
-	 * @param manche La manche en cours
+	 * @param cible       Le joueur ciblé (peut être null si pas de cible)
+	 * @param manche      La manche en cours
 	 */
-	public abstract void appliquerEffet(Joueur joueurActif, Joueur cible, Manche manche);
+	public abstract void appliquerEffet(ActionJoueur action, Manche manche);
 
 	/**
 	 * Indique si la carte nécessite de choisir une cible

@@ -1,4 +1,17 @@
+package modele;
+
 import java.util.ArrayList;
+
+import modele.cartes.AncienEleve;
+import modele.cartes.B2Anglais;
+import modele.cartes.BugInformatique;
+import modele.cartes.Directeur;
+import modele.cartes.Exam;
+import modele.cartes.GestionnaireSEE;
+import modele.cartes.Jury;
+import modele.cartes.LearningAgreement;
+import modele.cartes.ReglementDesEtudes;
+import modele.cartes.TuteurPedagogique;
 
 public class CarteFactory {
 

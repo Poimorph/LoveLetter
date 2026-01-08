@@ -1,3 +1,5 @@
+package modele;
+
 import java.util.*;
 
 /**
@@ -17,6 +19,7 @@ public class Manche {
 
 	/**
 	 * Constructeur avec liste de joueurs
+	 * 
 	 * @param joueurs La liste des joueurs participant à la manche
 	 */
 	public Manche(ArrayList<Joueur> joueurs) {
@@ -31,7 +34,8 @@ public class Manche {
 
 	/**
 	 * Constructeur avec liste de joueurs et premier joueur spécifié
-	 * @param joueurs La liste des joueurs participant à la manche
+	 * 
+	 * @param joueurs       La liste des joueurs participant à la manche
 	 * @param premierJoueur Le joueur qui commence la manche
 	 */
 	public Manche(ArrayList<Joueur> joueurs, Joueur premierJoueur) {
@@ -71,7 +75,7 @@ public class Manche {
 
 		System.out.println("=== NOUVELLE MANCHE ===");
 		System.out.println("Nombre de joueurs : " + joueursActifs.size());
-		System.out.println("Premier joueur : " + getJoueurActif().getNom());
+		System.out.println("Premier joueur : " + premierJoueur.getNom());
 	}
 
 	// ==================== DÉROULEMENT DU JEU ====================
@@ -79,31 +83,26 @@ public class Manche {
 	/**
 	 * Exécute le tour du joueur actif
 	 */
-	public void jouerTour() {
+	public void jouerTour(ActionJoueur action) {
 		if (estTerminee) {
 			System.out.println("La manche est terminée.");
 			return;
 		}
-
-		Joueur joueurActif = getJoueurActif();
-		if (joueurActif == null || joueurActif.isElimine()) {
-			passerAuJoueurSuivant();
-			return;
-		}
+		Joueur joueurActif = action.getJoueur();
+		Carte carte = action.getCarteJouee();
 
 		System.out.println("\n--- Tour de " + joueurActif.getNom() + " ---");
 
 		// Lever la protection du joueur au début de son tour
 		joueurActif.leverProtection();
 
-		// Le joueur pioche une carte
-		Carte cartePiochee = deck.piocher();
-		if (cartePiochee != null) {
-			joueurActif.recevoirCarte(cartePiochee);
-			System.out.println(joueurActif.getNom() + " pioche une carte.");
-		} else {
-			System.out.println("Le deck est vide !");
+		// On verifie si le joueur cible est protégé
+		if (action.getCible() != null && action.getCible().isProtege()) {
+			System.out.println(action.getCible().getNom() + " est protégé par le réglement et ne peut pas être ciblé.");
+			return;
 		}
+		// Jouer la carte choisie
+		carte.appliquerEffet(action, this);
 
 		// Vérifier si la manche est terminée après la pioche
 		if (verifierFinManche()) {
@@ -111,56 +110,59 @@ public class Manche {
 		}
 	}
 
-	/**
-	 * Fait jouer une carte au joueur actif
-	 * @param indexCarte L'index de la carte à jouer dans la main
-	 * @param cible Le joueur ciblé (peut être null)
-	 */
-	public void jouerCarte(int indexCarte, Joueur cible) {
-		Joueur joueurActif = getJoueurActif();
-		if (joueurActif == null) return;
+	// /**
+	// * Fait jouer une carte au joueur actif
+	// *
+	// * @param indexCarte L'index de la carte à jouer dans la main
+	// * @param cible Le joueur ciblé (peut être null)
+	// */
+	// public void jouerCarte(int indexCarte, Joueur cible) {
+	// Joueur joueurActif = getJoueurActif();
+	// if (joueurActif == null)
+	// return;
 
-		Main main = joueurActif.getMain();
-		if (main == null || indexCarte < 0 || indexCarte >= main.getNombreCartes()) {
-			System.out.println("Index de carte invalide.");
-			return;
-		}
+	// MainJoueur main = joueurActif.getMain();
+	// if (main == null || indexCarte < 0 || indexCarte >= main.getNombreCartes()) {
+	// System.out.println("Index de carte invalide.");
+	// return;
+	// }
 
-		// Vérifier la contrainte LA
-		ArrayList<Integer> indicesJouables = main.getIndicesCartesJouables();
-		if (!indicesJouables.contains(indexCarte)) {
-			System.out.println("Vous devez jouer le Learning Agreement !");
-			return;
-		}
+	// // Vérifier la contrainte LA
+	// ArrayList<Integer> indicesJouables = main.getIndicesCartesJouables();
+	// if (!indicesJouables.contains(indexCarte)) {
+	// System.out.println("Vous devez jouer le Learning Agreement !");
+	// return;
+	// }
 
-		// Retirer et jouer la carte
-		Carte carte = main.retirerCarte(indexCarte);
-		if (carte != null) {
-			System.out.println(joueurActif.getNom() + " joue " + carte.getNom());
+	// // Retirer et jouer la carte
+	// Carte carte = main.retirerCarte(indexCarte);
+	// if (carte != null) {
+	// System.out.println(joueurActif.getNom() + " joue " + carte.getNom());
 
-			// Ajouter aux cartes jouées du joueur
-			joueurActif.getCartesJouees().add(carte);
+	// // Ajouter aux cartes jouées du joueur
+	// joueurActif.getCartesJouees().add(carte);
 
-			// Ajouter à la défausse
-			deck.ajouterDansDefausse(carte);
+	// // Ajouter à la défausse
+	// deck.ajouterDansDefausse(carte);
 
-			// Appliquer l'effet
-			carte.appliquerEffet(joueurActif, cible, this);
-		}
+	// // Appliquer l'effet
+	// carte.appliquerEffet(joueurActif, cible, this);
+	// }
 
-		// Vérifier si la manche est terminée
-		if (verifierFinManche()) {
-			terminerManche();
-		} else {
-			passerAuJoueurSuivant();
-		}
-	}
+	// // Vérifier si la manche est terminée
+	// if (verifierFinManche()) {
+	// terminerManche();
+	// } else {
+	// passerAuJoueurSuivant();
+	// }
+	// }
 
 	/**
 	 * Passe au joueur suivant
 	 */
 	public void passerAuJoueurSuivant() {
-		if (joueursActifs.isEmpty()) return;
+		if (joueursActifs.isEmpty())
+			return;
 
 		int tentatives = 0;
 		do {
@@ -175,10 +177,12 @@ public class Manche {
 
 	/**
 	 * Élimine un joueur de la manche
+	 * 
 	 * @param joueur Le joueur à éliminer
 	 */
 	public void eliminerJoueur(Joueur joueur) {
-		if (joueur == null || joueur.isElimine()) return;
+		if (joueur == null || joueur.isElimine())
+			return;
 
 		System.out.println(joueur.getNom() + " est éliminé de la manche !");
 		joueur.eliminer();
@@ -191,6 +195,7 @@ public class Manche {
 
 	/**
 	 * Marque qu'un joueur a joué la carte B2 Anglais
+	 * 
 	 * @param joueur Le joueur qui a joué B2
 	 */
 	public void marquerB2Joue(Joueur joueur) {
@@ -201,6 +206,7 @@ public class Manche {
 
 	/**
 	 * Ancienne signature pour compatibilité
+	 * 
 	 * @deprecated Utiliser marquerB2Joue(Joueur) à la place
 	 */
 	public Joueur marquerB2Joue(int joueurIndex) {
@@ -214,6 +220,7 @@ public class Manche {
 
 	/**
 	 * Retourne la liste des joueurs qui peuvent être ciblés par le joueur actif
+	 * 
 	 * @param joueurActif Le joueur qui veut cibler
 	 * @return Liste des joueurs ciblables
 	 */
@@ -233,6 +240,7 @@ public class Manche {
 
 	/**
 	 * Retourne la liste des joueurs ciblables incluant soi-même
+	 * 
 	 * @param joueurActif Le joueur qui veut cibler
 	 * @return Liste des joueurs ciblables (incluant soi-même)
 	 */
@@ -251,6 +259,7 @@ public class Manche {
 
 	/**
 	 * Vérifie si la manche doit se terminer
+	 * 
 	 * @return true si la manche est terminée
 	 */
 	public boolean verifierFinManche() {
@@ -272,7 +281,8 @@ public class Manche {
 	 * Termine la manche et détermine le(s) vainqueur(s)
 	 */
 	private void terminerManche() {
-		if (estTerminee) return;
+		if (estTerminee)
+			return;
 
 		estTerminee = true;
 		System.out.println("\n=== FIN DE LA MANCHE ===");
@@ -288,7 +298,8 @@ public class Manche {
 			System.out.print("Vainqueurs (égalité) : ");
 			for (int i = 0; i < vainqueurs.size(); i++) {
 				System.out.print(vainqueurs.get(i).getNom());
-				if (i < vainqueurs.size() - 1) System.out.print(", ");
+				if (i < vainqueurs.size() - 1)
+					System.out.print(", ");
 			}
 			System.out.println();
 		}
@@ -305,6 +316,7 @@ public class Manche {
 
 	/**
 	 * Détermine le(s) vainqueur(s) de la manche
+	 * 
 	 * @return Liste des vainqueurs
 	 */
 	public ArrayList<Joueur> determinerVainqueurs() {
@@ -379,6 +391,7 @@ public class Manche {
 	/**
 	 * Vérifie et attribue le bonus B2 Anglais
 	 * Le bonus est attribué si un seul joueur parmi les vainqueurs a joué B2
+	 * 
 	 * @return Le joueur qui reçoit le bonus, ou null
 	 */
 	public Joueur verifierBonusB2() {
@@ -419,7 +432,8 @@ public class Manche {
 	 * Retourne le joueur dont c'est le tour
 	 */
 	public Joueur getJoueurActif() {
-		if (joueursActifs.isEmpty()) return null;
+		if (joueursActifs.isEmpty())
+			return null;
 		if (joueurActifIndex < 0 || joueurActifIndex >= joueursActifs.size()) {
 			joueurActifIndex = 0;
 		}
@@ -502,9 +516,9 @@ public class Manche {
 	@Override
 	public String toString() {
 		return String.format("Manche [%d joueurs actifs, %d cartes restantes, %s]",
-			getJoueursActifs().size(),
-			deck.getNombreCartesRestantes(),
-			estTerminee ? "Terminée" : "En cours");
+				getJoueursActifs().size(),
+				deck.getNombreCartesRestantes(),
+				estTerminee ? "Terminée" : "En cours");
 	}
 
 }

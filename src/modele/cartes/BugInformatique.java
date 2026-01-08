@@ -1,3 +1,12 @@
+package modele.cartes;
+
+import modele.ActionJoueur;
+import modele.Carte;
+import modele.Deck;
+import modele.Joueur;
+import modele.Manche;
+import modele.TypeCarte;
+
 /**
  * Bug Informatique (Prince) - Valeur 5
  * Effet : Choisissez un joueur (vous-même ou un adversaire).
@@ -8,13 +17,14 @@ public class BugInformatique extends Carte {
 
 	public BugInformatique() {
 		super(TypeCarte.BUG_INFORMATIQUE, 5, "Bug Informatique",
-			"Un joueur défausse sa main et pioche. Si c'est le Directeur, il est éliminé.");
+				"Un joueur défausse sa main et pioche. Si c'est le Directeur, il est éliminé.");
 	}
 
 	@Override
-	public void appliquerEffet(Joueur joueurActif, Joueur cible, Manche manche) {
+	public void appliquerEffet(ActionJoueur action, Manche manche) {
 		// Si pas de cible spécifiée, on cible le joueur actif
-		Joueur cibleEffective = (cible != null) ? cible : joueurActif;
+		Joueur cibleEffective = (action.getCible() != null) ? action.getCible() : action.getJoueur();
+
 
 		// Récupérer la carte en main avant de la défausser
 		Carte carteDefaussee = cibleEffective.defausserMain();
@@ -25,9 +35,9 @@ public class BugInformatique extends Carte {
 			// Ajouter la carte à la défausse
 			manche.getDeck().ajouterDansDefausse(carteDefaussee);
 
-			// Si c'est le Directeur (Princesse), le joueur est éliminé
-			if (carteDefaussee.getType() == TypeCarte.DIRLO) {
-				System.out.println(cibleEffective.getNom() + " a défaussé le Directeur et est éliminé !");
+			// Si c'est la Gestionnaire SEE (Princesse), le joueur est éliminé
+			if (carteDefaussee.getType() == TypeCarte.GESTIONNAIRE_SEE) {
+				System.out.println(cibleEffective.getNom() + " a défaussé la Gestionnaire SEE et est éliminé !");
 				manche.eliminerJoueur(cibleEffective);
 				return;
 			}

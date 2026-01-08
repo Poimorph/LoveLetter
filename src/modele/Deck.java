@@ -1,3 +1,5 @@
+package modele;
+
 import java.util.*;
 
 public class Deck {
@@ -48,6 +50,7 @@ public class Deck {
 
     /**
      * Met des cartes visibles sur le côté (règle pour 2 joueurs)
+     * 
      * @param nombre Le nombre de cartes à mettre de côté face visible
      */
     public void mettreCartesVisibles(int nombre) {
@@ -59,6 +62,7 @@ public class Deck {
 
     /**
      * Prépare le deck pour une manche selon le nombre de joueurs
+     * 
      * @param nombreJoueurs Le nombre de joueurs dans la partie
      */
     public void preparerPourManche(int nombreJoueurs) {
@@ -81,6 +85,7 @@ public class Deck {
 
     /**
      * Pioche une carte du dessus du deck
+     * 
      * @return La carte piochée, ou null si le deck est vide
      */
     public Carte piocher() {
@@ -92,6 +97,7 @@ public class Deck {
 
     /**
      * Pioche plusieurs cartes du deck
+     * 
      * @param nombre Le nombre de cartes à piocher
      * @return Liste des cartes piochées
      */
@@ -105,6 +111,7 @@ public class Deck {
 
     /**
      * Regarde la carte du dessus sans la retirer
+     * 
      * @return La carte du dessus, ou null si le deck est vide
      */
     public Carte regarderDessus() {
@@ -115,7 +122,9 @@ public class Deck {
     }
 
     /**
-     * Pioche la carte cachée (utilisé en fin de manche si deck vide et un seul joueur restant)
+     * Pioche la carte cachée (utilisé en fin de manche si deck vide et un seul
+     * joueur restant)
+     * 
      * @return La carte cachée
      */
     public Carte piocherCarteCachee() {
@@ -128,6 +137,7 @@ public class Deck {
 
     /**
      * Ajoute une carte à la défausse
+     * 
      * @param carte La carte à défausser
      */
     public void ajouterDansDefausse(Carte carte) {
@@ -138,6 +148,7 @@ public class Deck {
 
     /**
      * Ajoute plusieurs cartes à la défausse
+     * 
      * @param cartes Les cartes à défausser
      */
     public void ajouterDansDefausse(List<Carte> cartes) {
@@ -148,6 +159,7 @@ public class Deck {
 
     /**
      * Remet une carte sous le deck (effet de certaines cartes)
+     * 
      * @param carte La carte à remettre sous le deck
      */
     public void remettreEnDessous(Carte carte) {
@@ -158,6 +170,7 @@ public class Deck {
 
     /**
      * Remet une carte sur le dessus du deck
+     * 
      * @param carte La carte à remettre sur le deck
      */
     public void remettreEnDessus(Carte carte) {
@@ -184,6 +197,7 @@ public class Deck {
 
     /**
      * Vérifie si une carte d'un certain type est encore dans le deck
+     * 
      * @param type Le type de carte recherché
      * @return true si au moins une carte de ce type est dans le deck
      */
@@ -198,6 +212,7 @@ public class Deck {
 
     /**
      * Compte le nombre de cartes d'un type donné restant dans le deck
+     * 
      * @param type Le type de carte à compter
      * @return Le nombre de cartes de ce type
      */
@@ -264,6 +279,7 @@ public class Deck {
     /**
      * Calcule les cartes possiblement encore en jeu
      * (utile pour l'aide au joueur ou l'IA)
+     * 
      * @return Map avec le type de carte et le nombre possiblement restant
      */
     public String analyserCartesRestantes() {
@@ -327,6 +343,7 @@ public class Deck {
 
     /**
      * Distribue une carte à chaque joueur
+     * 
      * @param joueurs La liste des joueurs
      */
     public void distribuer(ArrayList<Joueur> joueurs) {
@@ -340,7 +357,8 @@ public class Deck {
 
     /**
      * Distribue plusieurs cartes à chaque joueur
-     * @param joueurs La liste des joueurs
+     * 
+     * @param joueurs      La liste des joueurs
      * @param nombreCartes Le nombre de cartes par joueur
      */
     public void distribuer(ArrayList<Joueur> joueurs, int nombreCartes) {

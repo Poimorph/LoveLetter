@@ -1,10 +1,13 @@
+package modele;
+
 import java.util.*;
 
-public class Main {
+public class MainJoueur {
 
     public static final int TAILLE_MAX = 2;
     private ArrayList<Carte> cartes;
-    public Main() {
+
+    public MainJoueur() {
         this.cartes = new ArrayList<>();
     }
 
@@ -12,6 +15,7 @@ public class Main {
 
     /**
      * Ajoute une carte à la main
+     * 
      * @param carte La carte à ajouter
      * @return true si la carte a été ajoutée, false si la main est pleine
      */
@@ -29,6 +33,7 @@ public class Main {
 
     /**
      * Retire une carte spécifique de la main
+     * 
      * @param carte La carte à retirer
      * @return La carte retirée, ou null si non trouvée
      */
@@ -45,6 +50,7 @@ public class Main {
 
     /**
      * Retire une carte de la main par son index
+     * 
      * @param index L'index de la carte à retirer
      * @return La carte retirée, ou null si l'index est invalide
      */
@@ -57,6 +63,7 @@ public class Main {
 
     /**
      * Retire une carte par son type
+     * 
      * @param type Le type de carte à retirer
      * @return La carte retirée, ou null si non trouvée
      */
@@ -71,6 +78,7 @@ public class Main {
 
     /**
      * Récupère une carte par son index sans la retirer
+     * 
      * @param index L'index de la carte
      * @return La carte, ou null si l'index est invalide
      */
@@ -83,6 +91,7 @@ public class Main {
 
     /**
      * Récupère une carte par son type sans la retirer
+     * 
      * @param type Le type de carte recherché
      * @return La carte, ou null si non trouvée
      */
@@ -113,6 +122,7 @@ public class Main {
 
     /**
      * Vérifie si la main contient une carte d'un type donné
+     * 
      * @param type Le type de carte recherché
      * @return true si la main contient ce type de carte
      */
@@ -127,6 +137,7 @@ public class Main {
 
     /**
      * Vérifie si la main contient une carte d'une valeur donnée
+     * 
      * @param valeur La valeur recherchée
      * @return true si la main contient une carte de cette valeur
      */
@@ -160,15 +171,14 @@ public class Main {
         return cartes.size();
     }
 
-
-
     // ==================== ÉCHANGES ====================
 
     /**
      * Échange le contenu de cette main avec une autre main
+     * 
      * @param autreMain La main avec laquelle échanger
      */
-    public void echangerAvec(Main autreMain) {
+    public void echangerAvec(MainJoueur autreMain) {
         if (autreMain == null) {
             return;
         }

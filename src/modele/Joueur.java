@@ -1,15 +1,16 @@
+package modele;
+
 import java.util.*;
 
 public class Joueur {
     private String nom;
-    private Main main;
+    private MainJoueur main;
     private ArrayList<Carte> cartesJouees;
     private int pionsFaveur;
     private boolean estProtege;
     private boolean estElimine;
 
-
-    public Joueur(String nom, Main main) {
+    public Joueur(String nom, MainJoueur main) {
         this.nom = nom;
         this.main = main;
         this.cartesJouees = new ArrayList<>();
@@ -27,36 +28,40 @@ public class Joueur {
         }
     }
 
-    /**
-     * Joue une carte de la main et l'ajoute aux cartes jouées
-     * @param index L'index de la carte dans la main
-     * @return La carte jouée
-     */
-    public Carte jouerCarte(int index) {
-        Carte carte = main.retirerCarte(index);
-        if (carte != null) {
-            cartesJouees.add(carte);
-            carte.appliquerEffet(this,this, Partie.getInstance().getMancheActuelle());
-        }
-        return carte;
-    }
+    // /**
+    // * Joue une carte de la main et l'ajoute aux cartes jouées
+    // *
+    // * @param index L'index de la carte dans la main
+    // * @return La carte jouée
+    // */
+    // public Carte jouerCarte(int index) {
+    // Carte carte = main.retirerCarte(index);
+    // if (carte != null) {
+    // cartesJouees.add(carte);
+    // carte.appliquerEffet(this, this, Partie.getInstance().getMancheActuelle());
+    // }
+    // return carte;
+    // }
 
-    /**
-     * Joue une carte spécifique de la main
-     * @param carte La carte à jouer
-     * @return La carte jouée, ou null si non trouvée
-     */
-    public Carte jouerCarte(Carte carte) {
-        Carte carteRetiree = main.retirerCarte(carte);
-        if (carteRetiree != null) {
-            cartesJouees.add(carteRetiree);
-            carteRetiree.appliquerEffet(this,this, Partie.getInstance().getMancheActuelle());
-        }
-        return carteRetiree;
-    }
+    // /**
+    // * Joue une carte spécifique de la main
+    // *
+    // * @param carte La carte à jouer
+    // * @return La carte jouée, ou null si non trouvée
+    // */
+    // public Carte jouerCarte(Carte carte) {
+    // Carte carteRetiree = main.retirerCarte(carte);
+    // if (carteRetiree != null) {
+    // cartesJouees.add(carteRetiree);
+    // carteRetiree.appliquerEffet(this, this,
+    // Partie.getInstance().getMancheActuelle());
+    // }
+    // return carteRetiree;
+    // }
 
     /**
      * Défausse la main du joueur (utilisé lors de l'élimination ou effet de carte)
+     * 
      * @return La carte défaussée
      */
     public Carte defausserMain() {
@@ -90,7 +95,8 @@ public class Joueur {
     }
 
     /**
-     * Calcule la somme des valeurs des cartes jouées (pour départager en cas d'égalité)
+     * Calcule la somme des valeurs des cartes jouées (pour départager en cas
+     * d'égalité)
      */
     public int getSommeCartesJouees() {
         int somme = 0;
@@ -114,11 +120,12 @@ public class Joueur {
 
     /**
      * Vérifie si le joueur doit obligatoirement jouer LA (contrainte LA)
-     * Le joueur doit jouer LA s'il a LA + Roi (Directeur) ou LA + Prince (Bug Informatique) en main
+     * Le joueur doit jouer LA s'il a LA + Roi (Directeur) ou LA + Prince (Bug
+     * Informatique) en main
      */
     public boolean doitJouerLA() {
         boolean aLA = aCarteEnMain(TypeCarte.LA);
-        boolean aRoi = aCarteEnMain(TypeCarte.DIRLO);           // Directeur = Roi
+        boolean aRoi = aCarteEnMain(TypeCarte.DIRLO); // Directeur = Roi
         boolean aPrince = aCarteEnMain(TypeCarte.BUG_INFORMATIQUE); // Bug Informatique = Prince
 
         return aLA && (aRoi || aPrince);
@@ -206,13 +213,14 @@ public class Joueur {
      * Échange sa main avec un autre joueur (effet Jury)
      */
     public void echangerMain(Joueur autreJoueur) {
-        Main tempMain = this.main;
+        MainJoueur tempMain = this.main;
         this.main = autreJoueur.main;
         autreJoueur.main = tempMain;
     }
 
     /**
      * Remplace la main actuelle par une nouvelle carte (effet Directeur)
+     * 
      * @param nouvelleCarte La nouvelle carte à mettre en main
      * @return L'ancienne carte qui était en main
      */
@@ -247,10 +255,10 @@ public class Joueur {
      * Vérifie si la main du joueur est complète (2 cartes)
      */
     public boolean aMainComplete() {
-        return main.getNombreCartes() == Main.TAILLE_MAX;
+        return main.getNombreCartes() == MainJoueur.TAILLE_MAX;
     }
 
-// ==================== AFFICHAGE ====================
+    // ==================== AFFICHAGE ====================
 
     /**
      * Retourne une représentation des cartes jouées (visibles par tous)
@@ -291,8 +299,10 @@ public class Joueur {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
         Joueur joueur = (Joueur) obj;
         return nom.equals(joueur.nom);
     }
@@ -303,29 +313,28 @@ public class Joueur {
     }
 
     // =============== ACCESSEURS ================
-	public String getNom() {
-		return nom;
-	}
+    public String getNom() {
+        return nom;
+    }
 
-	public Main getMain() {
-		return main;
-	}
+    public MainJoueur getMain() {
+        return main;
+    }
 
-	public ArrayList<Carte> getCartesJouees() {
-		return cartesJouees;
-	}
+    public ArrayList<Carte> getCartesJouees() {
+        return cartesJouees;
+    }
 
-	public int getPionsFaveur() {
-		return pionsFaveur;
-	}
+    public int getPionsFaveur() {
+        return pionsFaveur;
+    }
 
-	public boolean isProtege() {
-		return estProtege;
-	}
+    public boolean isProtege() {
+        return estProtege;
+    }
 
-	public boolean isElimine() {
-		return estElimine;
-	}
-
+    public boolean isElimine() {
+        return estElimine;
+    }
 
 }
