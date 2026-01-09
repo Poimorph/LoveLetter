@@ -26,7 +26,7 @@ public class InitNomsDialog extends JDialog {
             JTextField nomField = new JTextField();
             nomFields[i] = nomField;
             inputPanel.add(nomLabel);
-            inputPanel.add(nomField);
+            inputPanel.add(nomLabel.toString(),nomField);
         }
 
         JButton startButton = new JButton("Valider");

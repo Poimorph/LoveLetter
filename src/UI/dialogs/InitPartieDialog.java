@@ -13,7 +13,7 @@ public class InitPartieDialog extends JDialog {
               "Initialisation de la partie",
               ModalityType.APPLICATION_MODAL);
 
-        this.setSize(600, 300);
+        this.setSize(300, 300);
         this.setLocationRelativeTo(parent);
         this.setLayout(new BorderLayout());
 
@@ -25,35 +25,13 @@ public class InitPartieDialog extends JDialog {
         inputPanel.add(nbJoueursLabel);
         inputPanel.add(nbJoueursField);
 
-        // JTextField[] nomFields = new JTextField[6];
-        // for (int i = 0; i < 6; i++) {
-        //     JLabel nomLabel = new JLabel("Nom du joueur " + (i + 1) + " :");
-        //     JTextField nomField = new JTextField();
-        //     nomFields[i] = nomField;
-        //     inputPanel.add(nomLabel);
-        //     inputPanel.add(nomField);
-        // }
-
         JButton startButton = new JButton("Valider");
         startButton.addActionListener(e -> {
             try {
                 nbJoueurs = Integer.parseInt(nbJoueursField.getText());
-                // if (nbJoueurs < 2 || nbJoueurs > 6) {
-                //     throw new NumberFormatException();
-                // }
-                // nomsJoueurs = new ArrayList<>();
-                // for (int i = 0; i < nbJoueurs; i++) {
-                //     String nom = nomFields[i].getText().trim();
-                //     if (nom.isEmpty()) {
-                //         JOptionPane.showMessageDialog(
-                //             this,
-                //             "Veuillez entrer un nom pour chaque joueur.",
-                //             "Erreur",
-                //             JOptionPane.ERROR_MESSAGE);
-                //         return;
-                //     }
-                //    nomsJoueurs.add(nom);
-                //}
+                if (nbJoueurs < 2 || nbJoueurs > 6) {
+                    throw new NumberFormatException();
+                }
                 dispose();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(

@@ -86,6 +86,7 @@ public class Partie {
             throw new IllegalStateException("La partie n'a pas été initialisée avec des joueurs");
         }
         etat = EtatPartie.En_Cours;
+        numeroManche = 0;
         lancerNouvelleManche();
     }
 
@@ -107,6 +108,10 @@ public class Partie {
         mancheActuelle = new Manche(joueurs, premierJoueur);
         mancheActuelle.initialiser();
         manches.add(mancheActuelle);
+        for (Joueur j : joueurs) {
+            // Distribuer une carte à chaque joueur
+            j.getMain().ajouterCarte(mancheActuelle.getDeck().piocher());
+        }
     }
 
     /**

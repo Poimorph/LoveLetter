@@ -65,7 +65,6 @@ public class GameController {
         partie.initialiser(noms);
         partie.demarrerPartie();
         manche = partie.getMancheActuelle();
-        ui.refresh();
     }
 
     public void nouvellePartie(String[] noms) {
@@ -78,7 +77,7 @@ public class GameController {
         partie.initialiser(nomsListe);
         partie.demarrerPartie();
         manche = partie.getMancheActuelle();
-        ui.refresh();
+        //ui.refresh();
     }
 
     public Joueur getJoueurActif() {
@@ -87,7 +86,7 @@ public class GameController {
 
     public void jouerCarte(Joueur j, int indexMain) {
 
-        var carte = j.getMain().getCarte(indexMain);
+        Carte carte = j.getMain().getCarte(indexMain);
 
         if (carte.getValeur() == 1) { // GARDE
             demanderCibleGarde(j, carte);
