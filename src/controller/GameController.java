@@ -25,6 +25,9 @@ public class GameController {
         this.ui = ui;
     }
 
+    public GameController() {
+    }
+
     public void Play() {
         InitPartieDialog dialog = new InitPartieDialog(ui);
         dialog.afficher();
@@ -55,6 +58,7 @@ public class GameController {
             }
             partie.lancerNouvelleManche();
         }
+
     }
 
     public void initialiserPartie(ArrayList<String> noms) {
@@ -75,6 +79,7 @@ public class GameController {
         partie.demarrerPartie();
         manche = partie.getMancheActuelle();
         ui.refresh();
+        boucleJeu();
     }
 
     public Joueur getJoueurActif() {

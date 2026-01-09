@@ -21,7 +21,7 @@ linkcolor: blue
 
 # Introduction
 
-L'objetif de ce projet était de récréer le jeu "love letter" en java tout en modifiant le contexte du jeu pour l'adapter à l'univers de l'UTBM. Nous avons donc choisit de baser le jeu sur la demande de semestre d'étude à l'étrnager.
+L'objetif de ce projet était de recréer le jeu "Love Letter" en java tout en modifiant le contexte du jeu pour l'adapter à l'univers de l'UTBM. Nous avons donc choisit de baser le jeu sur la demande de semestre d'étude à l'étrnager.
 
 # Architecture
 
