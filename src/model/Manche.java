@@ -104,6 +104,9 @@ public class Manche {
 		// Jouer la carte choisie
 		carte.appliquerEffet(action, this);
 
+		// on défausse la carte jouée
+		joueurActif.getMain().retirerCarte(carte);
+
 		// Vérifier si la manche est terminée après la pioche
 		if (verifierFinManche()) {
 			terminerManche();

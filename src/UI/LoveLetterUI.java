@@ -30,6 +30,11 @@ public class LoveLetterUI extends JFrame {
             new LoveLetterUI().setVisible(true);
         });
     }
+
+    public void launcheGame() {
+        controller.Play();
+    }
+
     public PlateauPanel getPlateau() {
         return plateau;
     }

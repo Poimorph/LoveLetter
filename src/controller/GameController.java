@@ -1,10 +1,7 @@
 package controller;
 
 import ui.LoveLetterUI;
-import ui.dialogs.ChoixCarteDialog;
-import ui.dialogs.InitNomsDialog;
-import ui.dialogs.InitPartieDialog;
-import ui.dialogs.TargetDialog;
+import ui.dialogs.*;
 
 import java.util.ArrayList;
 import javax.swing.*;
@@ -13,7 +10,6 @@ import model.ActionJoueur;
 import model.Carte;
 import model.CarteFactory;
 import model.Joueur;
-import model.MainJoueur;
 import model.Manche;
 import model.Partie;
 
@@ -27,12 +23,13 @@ public class GameController {
 
     public GameController(LoveLetterUI ui) {
         this.ui = ui;
-        InitPartieDialog dialog =
-            new InitPartieDialog(ui);
+    }
+
+    public void Play() {
+        InitPartieDialog dialog = new InitPartieDialog(ui);
         dialog.afficher();
         int nbJoueurs = dialog.getNbJoueurs();
-        InitNomsDialog nomsDialog =
-            new InitNomsDialog(ui, nbJoueurs);
+        InitNomsDialog nomsDialog = new InitNomsDialog(ui, nbJoueurs);
         nomsDialog.afficher();
         ArrayList<String> noms = nomsDialog.getNomsJoueurs();
         initialiserPartie(noms);
@@ -40,13 +37,13 @@ public class GameController {
         ui.refresh();
     }
 
-    public void boucleJeu(){
+    public void boucleJeu() {
         while (!partie.estTerminee()) {
             manche = partie.getMancheActuelle();
             while (!manche.isTerminee()) {
                 Joueur actif = manche.getJoueurActif();
-                ChoixCarteDialog choixCarteDialog =
-                    new ChoixCarteDialog(
+                actif.getMain().ajouterCarte(manche.getDeck().piocher());
+                ChoixCarteDialog choixCarteDialog = new ChoixCarteDialog(
                         ui,
                         "Choisir une carte à jouer, "
                                 + actif.getNom(),
@@ -77,7 +74,7 @@ public class GameController {
         partie.initialiser(nomsListe);
         partie.demarrerPartie();
         manche = partie.getMancheActuelle();
-        //ui.refresh();
+        ui.refresh();
     }
 
     public Joueur getJoueurActif() {
@@ -88,45 +85,45 @@ public class GameController {
 
         Carte carte = j.getMain().getCarte(indexMain);
 
-        if (carte.getValeur() == 1) { // GARDE
-            demanderCibleGarde(j, carte);
+        Joueur cible = demanderCibleGarde(j, carte);
+        Carte carteDevinee = demanderDevinette(j, carte);
 
-        } else {
-            ActionJoueur action = new ActionJoueur(
-                                            j,
-                                            carte,
-                                            null,
-                                            null);
-            manche.jouerTour(action);
-            ui.refresh();
-        }
+        ActionJoueur action = new ActionJoueur(
+                j,
+                carte,
+                cible,
+                (carteDevinee != null) ? carteDevinee.getType() : null);
+        manche.jouerTour(action);
+        ui.refresh();
+
     }
 
-    private void demanderCibleGarde(Joueur j, Carte carte) {
-        TargetDialog d = new TargetDialog(ui, manche.getTousLesJoueurs());
-        Joueur cible = d.afficher();
-
-        if (cible != null) {
-            String userInputValue = JOptionPane.showInputDialog(
-                    ui,
-                    "Devine une valeur (0-9)");
-
-            Carte carteDevinee = CarteFactory.creerCarte(Integer.parseInt(userInputValue));
-            ActionJoueur action = new ActionJoueur(
-                                            j,
-                                            carte,
-                                            cible,
-                                            carteDevinee.getType());
-            manche.jouerTour(action);
-            ui.refresh();
+    private Joueur demanderCibleGarde(Joueur j, Carte carte) {
+        if (!carte.necessiteCible()) {
+            return null;
         }
+        TargetDialog d = new TargetDialog(ui, manche.getJoueursCiblables(j));
+        Joueur cible = d.afficher();
+        return cible;
+    }
+
+    private Carte demanderDevinette(Joueur j, Carte carte) {
+        if (carte.getValeur() == 1) { // GARDE
+            GuardValueDialog dialog = new GuardValueDialog(ui);
+            Integer userInputValue = dialog.showDialog();
+            if (userInputValue == null)
+                return null;
+
+            Carte carteDevinee = CarteFactory.creerCarte(userInputValue);
+
+            return carteDevinee;
+        }
+        return null;
     }
 
     public Manche getManche() {
         return manche;
     }
-
-
 
     public void passerTourLocal() {
 
