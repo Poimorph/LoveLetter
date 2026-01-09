@@ -171,6 +171,8 @@ public class MainJoueur {
         return cartes.size();
     }
 
+
+
     // ==================== ÉCHANGES ====================
 
     /**
@@ -263,6 +265,19 @@ public class MainJoueur {
         }
 
         return indices;
+    }
+
+    /**
+     * Retourne les noms des cartes jouables selon la contrainte LA
+     */
+    public ArrayList<String> getNomsCartesJouables() {
+        ArrayList<String> noms = new ArrayList<>();
+        ArrayList<Carte> cartesJouables = getCartesJouables();
+        for (Carte carte : cartesJouables) {
+            noms.add(carte.getNom());
+        }
+        
+        return noms;
     }
 
     /**

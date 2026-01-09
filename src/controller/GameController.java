@@ -1,14 +1,22 @@
 package controller;
 
 import ui.LoveLetterUI;
+import ui.dialogs.ChoixCarteDialog;
+import ui.dialogs.InitPartieDialog;
 import ui.dialogs.TargetDialog;
 
+import java.util.ArrayList;
 import javax.swing.*;
 
+import model.ActionJoueur;
+import model.Carte;
+import model.CarteFactory;
 import model.Joueur;
 import model.MainJoueur;
 import model.Manche;
 import model.Partie;
+
+import java.awt.*;
 
 public class GameController {
 
@@ -18,6 +26,41 @@ public class GameController {
 
     public GameController(LoveLetterUI ui) {
         this.ui = ui;
+        InitPartieDialog dialog =
+            new InitPartieDialog(ui);
+        dialog.afficher();
+        ArrayList<String> noms = dialog.getNomsJoueurs();
+        initialiserPartie(noms);
+        boucleJeu();
+        ui.refresh();
+    }
+
+    public void boucleJeu(){
+        while (!partie.estTerminee()) {
+            manche = partie.getMancheActuelle();
+            while (!manche.isTerminee()) {
+                Joueur actif = manche.getJoueurActif();
+                ChoixCarteDialog choixCarteDialog =
+                    new ChoixCarteDialog(
+                        ui,
+                        "Choisir une carte à jouer, "
+                                + actif.getNom(),
+                        actif.getMain().getNomsCartesJouables());
+                int indexChoisi = choixCarteDialog.afficher();
+                jouerCarte(actif, indexChoisi);
+                manche.passerAuJoueurSuivant();
+                ui.refresh();
+            }
+            partie.lancerNouvelleManche();
+        }
+    }
+
+    public void initialiserPartie(ArrayList<String> noms) {
+        partie = Partie.getInstance(noms.size());
+        partie.initialiser(noms);
+        partie.demarrerPartie();
+        manche = partie.getMancheActuelle();
+        ui.refresh();
     }
 
     public void nouvellePartie(String[] noms) {
@@ -39,28 +82,38 @@ public class GameController {
 
     public void jouerCarte(Joueur j, int indexMain) {
 
-        // Selon ta logique : récupérer la carte
         var carte = j.getMain().getCarte(indexMain);
 
         if (carte.getValeur() == 1) { // GARDE
             demanderCibleGarde(j, carte);
 
         } else {
-            manche.jouerCarte(j, carte, null);
+            ActionJoueur action = new ActionJoueur(
+                                            j,
+                                            carte,
+                                            null,
+                                            null);
+            manche.jouerTour(action);
             ui.refresh();
         }
     }
 
-    private void demanderCibleGarde(Joueur j, var carte) {
-        TargetDialog d = new TargetDialog(manche.getJoueursCiblables(j));
-        Joueur cible = d.show();
+    private void demanderCibleGarde(Joueur j, Carte carte) {
+        TargetDialog d = new TargetDialog(ui, manche.getTousLesJoueurs());
+        Joueur cible = d.afficher();
 
         if (cible != null) {
-            int valeur = JOptionPane.showInputDialog(
+            String userInputValue = JOptionPane.showInputDialog(
                     ui,
-                    "Devine une valeur (2-8)");
+                    "Devine une valeur (0-9)");
 
-            manche.jouerCarte(j, carte, cible, valeur);
+            Carte carteDevinee = CarteFactory.creerCarte(Integer.parseInt(userInputValue));
+            ActionJoueur action = new ActionJoueur(
+                                            j,
+                                            carte,
+                                            cible,
+                                            carteDevinee.getType());
+            manche.jouerTour(action);
             ui.refresh();
         }
     }
@@ -69,7 +122,7 @@ public class GameController {
         return manche;
     }
 
-    // ----- À AJOUTER DANS GameController -----
+
 
     public void passerTourLocal() {
 
