@@ -1,7 +1,7 @@
 package controller;
 
 import ui.LoveLetterUI;
-//import ui.dialogs.TargetDialog;
+import ui.dialogs.TargetDialog;
 
 import javax.swing.*;
 

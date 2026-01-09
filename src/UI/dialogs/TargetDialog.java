@@ -52,10 +52,10 @@ public class TargetDialog extends JDialog {
         this.add(scroll, BorderLayout.CENTER);
     }
 
-    /**
-     * Affiche le dialogue et retourne
-     * le joueur sélectionné ou null
-     */
+    
+     // Affiche le dialogue et retourne
+     // le joueur sélectionné ou null
+     
     public Joueur showDialog() {
         this.setVisible(true);
         return selected;

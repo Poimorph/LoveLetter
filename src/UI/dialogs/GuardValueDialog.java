@@ -46,10 +46,10 @@ public class GuardValueDialog extends JDialog {
         this.add(buttons, BorderLayout.CENTER);
     }
 
-    /**
-     * Affiche le dialogue et retourne
-     * la valeur choisie ou null
-     */
+    
+     // Affiche le dialogue et retourne
+     // la valeur choisie ou null
+     
     public Integer showDialog() {
         this.setVisible(true);
         return value;
