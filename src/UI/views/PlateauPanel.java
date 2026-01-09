@@ -52,7 +52,7 @@ public class PlateauPanel extends JPanel {
                 this,
                 "Noms des joueurs séparés par des virgules");
 
-        if (saisie == null || saisie.isBlank())
+        if (saisie == null || saisie.isEmpty())
             return;
 
         String[] noms = saisie.split(",");
