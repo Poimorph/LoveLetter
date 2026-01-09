@@ -30,4 +30,8 @@ public class LoveLetterUI extends JFrame {
             new LoveLetterUI().setVisible(true);
         });
     }
+    public PlateauPanel getPlateau() {
+        return plateau;
+    }
+
 }
