@@ -55,6 +55,7 @@ public class GameController {
                 jouerCarte(actif, indexChoisi);
                 manche.passerAuJoueurSuivant();
                 ui.refresh();
+                showMaskForPlayer(actif);
             }
             partie.lancerNouvelleManche();
         }
@@ -78,36 +79,73 @@ public class GameController {
         partie.initialiser(nomsListe);
         partie.demarrerPartie();
         manche = partie.getMancheActuelle();
+        debuterTour();
+    }
+
+    private void debuterTour() {
+        if (partie.estTerminee() || manche.isTerminee()) {
+            gererFinManche();
+            return;
+        }
+        Joueur actif = manche.getJoueurActif();
+        if (manche.getDeck().getNombreCartesRestantes() > 0) {
+            actif.getMain().ajouterCarte(manche.getDeck().piocher());
+        } else {
+            Carte carteJeu = manche.getCarteCachee();
+            if (carteJeu != null)
+                actif.getMain().ajouterCarte(carteJeu);
+        }
         ui.refresh();
-        boucleJeu();
+        showMaskForPlayer(actif);
     }
 
     public Joueur getJoueurActif() {
         return manche.getJoueurActif();
     }
 
-    public void jouerCarte(Joueur j, int indexMain) {
-
-        Carte carte = j.getMain().getCarte(indexMain);
-
-        Joueur cible = demanderCibleGarde(j, carte);
-        Carte carteDevinee = demanderDevinette(j, carte);
-
+    /**
+     * Appelée par CardButton quand on clique sur une carte.
+     * C'est la suite de la "boucle".
+     */
+    public void jouerCarte(Joueur joueur, int indexMain) {
+        if (!joueur.equals(manche.getJoueurActif())) {
+            JOptionPane.showMessageDialog(ui, "Ce n'est pas votre tour !");
+            return;
+        }
+        Carte carte = joueur.getMain().getCarte(indexMain);
+        Joueur cible = demanderCibleGarde(joueur, carte);
+        Carte carteDevinee = demanderDevinette(joueur, carte);
         ActionJoueur action = new ActionJoueur(
-                j,
+                joueur,
                 carte,
                 cible,
                 (carteDevinee != null) ? carteDevinee.getType() : null);
-
-        // Si c'est un Ancien Élève (valeur 6), demander quelle carte garder
         if (carte.getValeur() == 6) {
-            int choixCarte = demanderChoixCarteAncienEleve(j);
+            int choixCarte = demanderChoixCarteAncienEleve(joueur);
             action.setCarteGardeeIndex(choixCarte);
         }
-
         manche.jouerTour(action);
+        verifierEtatJeu();
+    }
+
+    /**
+     * Vérifie si la manche ou la partie est finie, sinon passe au joueur suivant.
+     */
+    private void verifierEtatJeu() {
         ui.refresh();
 
+        if (partie.estTerminee()) {
+            JOptionPane.showMessageDialog(ui,
+                    "La partie est terminée ! Vainqueur : " + partie.getVainqueurFinal().getNom());
+            return;
+        }
+
+        if (manche.isTerminee()) {
+            gererFinManche();
+        } else {
+            manche.passerAuJoueurSuivant();
+            debuterTour();
+        }
     }
 
     private Joueur demanderCibleGarde(Joueur j, Carte carte) {
@@ -131,6 +169,21 @@ public class GameController {
             return carteDevinee;
         }
         return null;
+    }
+
+    private void gererFinManche() {
+        Joueur vainqueur = manche.determinerVainqueurs().get(0);
+        String msg = "Fin de la manche ! Vainqueur : " + (vainqueur != null ? vainqueur.getNom() : "Personne");
+        JOptionPane.showMessageDialog(ui, msg);
+
+        partie.lancerNouvelleManche();
+
+        if (!partie.estTerminee()) {
+            manche = partie.getMancheActuelle();
+            debuterTour();
+        } else {
+            JOptionPane.showMessageDialog(ui, "Partie Terminée !");
+        }
     }
 
     private int demanderChoixCarteAncienEleve(Joueur j) {

@@ -15,10 +15,10 @@ public class LoveLetterUI extends JFrame {
         this.setSize(1000, 700);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        controller = new GameController(this);
-        plateau = new PlateauPanel(controller);
+        // controller = new GameController(this);
+        // plateau = new PlateauPanel(controller);
 
-        this.setContentPane(plateau);
+        // this.setContentPane(plateau);
     }
 
     public void refresh() {
@@ -29,7 +29,14 @@ public class LoveLetterUI extends JFrame {
         SwingUtilities.invokeLater(() -> {
             new LoveLetterUI().setVisible(true);
         });
-        
+
+    }
+
+    public void setController(GameController controller) {
+        this.controller = controller;
+        plateau = new PlateauPanel(controller);
+
+        this.setContentPane(plateau);
     }
 
     public void launcheGame() {
