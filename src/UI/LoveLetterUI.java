@@ -1,7 +1,7 @@
 package ui;
 
 import ui.views.PlateauPanel;
-import ui.controller.GameController;
+import controller.GameController;
 
 import javax.swing.*;
 

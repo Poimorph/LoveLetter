@@ -1,6 +1,6 @@
 package ui.views;
 
-import ui.controller.GameController;
+import controller.GameController;
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,12 +19,11 @@ public class HandPanel extends JPanel {
 
         var actif = controller.getJoueurActif();
 
-        for (int i = 0; i < actif.getMain().size(); i++) {
+        for (int i = 0; i < actif.getMain().getNombreCartes(); i++) {
 
-            var carte = actif.getMain().get(i);
+            var carte = actif.getMain().getCarte(i);
 
-            CardButton btn =
-                new CardButton(carte, i, controller);
+            CardButton btn = new CardButton(carte, i, controller);
 
             this.add(btn);
         }
