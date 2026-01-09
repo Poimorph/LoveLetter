@@ -93,6 +93,13 @@ public class GameController {
                 carte,
                 cible,
                 (carteDevinee != null) ? carteDevinee.getType() : null);
+
+        // Si c'est un Ancien Élève (valeur 6), demander quelle carte garder
+        if (carte.getValeur() == 6) {
+            int choixCarte = demanderChoixCarteAncienEleve(j);
+            action.setCarteGardeeIndex(choixCarte);
+        }
+
         manche.jouerTour(action);
         ui.refresh();
 
@@ -119,6 +126,27 @@ public class GameController {
             return carteDevinee;
         }
         return null;
+    }
+
+    private int demanderChoixCarteAncienEleve(Joueur j) {
+        Carte carteEnMain = j.getMain().getCarte(0);
+        ArrayList<Carte> cartesDuDeck = manche.getDeck().regarderPlusieurs(2);
+        ArrayList<String> options = new ArrayList<>();
+
+        if (carteEnMain != null) {
+            options.add(carteEnMain.getNom() + " (Valeur: " + carteEnMain.getValeur() + ") - En main");
+        }
+        for (int i = 0; i < cartesDuDeck.size(); i++) {
+            Carte c = cartesDuDeck.get(i);
+            options.add(c.getNom() + " (Valeur: " + c.getValeur() + ") - Piochée");
+        }
+
+        ChoixCarteDialog dialog = new ChoixCarteDialog(
+                ui,
+                "Ancien Élève - Choisissez la carte à garder",
+                options);
+
+        return dialog.afficher();
     }
 
     public Manche getManche() {

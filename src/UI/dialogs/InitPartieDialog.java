@@ -1,6 +1,5 @@
 package ui.dialogs;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,8 +9,8 @@ public class InitPartieDialog extends JDialog {
 
     public InitPartieDialog(Window parent) {
         super(parent,
-              "Initialisation de la partie",
-              ModalityType.APPLICATION_MODAL);
+                "Initialisation de la partie",
+                ModalityType.APPLICATION_MODAL);
 
         this.setSize(300, 300);
         this.setLocationRelativeTo(parent);
@@ -35,24 +34,22 @@ public class InitPartieDialog extends JDialog {
                 dispose();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(
-                    this,
-                    "Veuillez entrer un nombre valide de joueurs (2-6).",
-                    "Erreur",
-                    JOptionPane.ERROR_MESSAGE);
+                        this,
+                        "Veuillez entrer un nombre valide de joueurs (2-6).",
+                        "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
         this.add(inputPanel, BorderLayout.CENTER);
         this.add(startButton, BorderLayout.SOUTH);
     }
+
     public int getNbJoueurs() {
         return nbJoueurs;
     }
+
     public void afficher() {
         this.setVisible(true);
     }
-
-
-
-
 }

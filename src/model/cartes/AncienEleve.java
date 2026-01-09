@@ -17,8 +17,6 @@ import model.TypeCarte;
  */
 public class AncienEleve extends Carte {
 
-	private int carteGardeeIndex = 0;
-
 	public AncienEleve() {
 		super(TypeCarte.ANCIEN, 6, "Ancien Élève",
 				"Piochez 2 cartes, gardez-en 1, remettez les 2 autres sous le deck.");
@@ -37,12 +35,6 @@ public class AncienEleve extends Carte {
 			return;
 		}
 
-		// Le joueur a maintenant sa carte en main + les 2 cartes piochées
-		// Il doit choisir 1 carte à garder parmi les 3
-		// Pour l'instant, on garde la carte avec la plus haute valeur (logique par
-		// défaut)
-		// La vraie sélection sera gérée par le contrôleur/vue
-
 		MainJoueur mainJoueur = joueurActif.getMain();
 		Carte carteEnMain = mainJoueur.getCarte(0);
 
@@ -60,10 +52,18 @@ public class AncienEleve extends Carte {
 					+ " (Valeur: " + toutesLesCartes.get(i).getValeur() + ")");
 		}
 
-		// Garder la carte choisie (par défaut index 0, peut être changé via
-		// setCarteGardeeIndex)
+		// Récupérer l'index choisi par le joueur via l'action
+		int carteGardeeIndex = action.getCarteGardeeIndex();
 		if (carteGardeeIndex < 0 || carteGardeeIndex >= toutesLesCartes.size()) {
+			// Par défaut, garder la carte avec la plus haute valeur
 			carteGardeeIndex = 0;
+			int maxValeur = toutesLesCartes.get(0).getValeur();
+			for (int i = 1; i < toutesLesCartes.size(); i++) {
+				if (toutesLesCartes.get(i).getValeur() > maxValeur) {
+					maxValeur = toutesLesCartes.get(i).getValeur();
+					carteGardeeIndex = i;
+				}
+			}
 		}
 
 		Carte carteGardee = toutesLesCartes.get(carteGardeeIndex);
@@ -88,10 +88,10 @@ public class AncienEleve extends Carte {
 	}
 
 	/**
-	 * Définit l'index de la carte à garder (0, 1 ou 2)
+	 * Retourne true car cette carte nécessite un choix de carte à garder
 	 */
-	public void setCarteGardeeIndex(int index) {
-		this.carteGardeeIndex = index;
+	public boolean necessiteChoixCarte() {
+		return true;
 	}
 
 }

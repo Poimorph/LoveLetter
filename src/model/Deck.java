@@ -111,7 +111,7 @@ public class Deck {
 
     /**
      * Regarde la carte du dessus sans la retirer
-     * 
+     *
      * @return La carte du dessus, ou null si le deck est vide
      */
     public Carte regarderDessus() {
@@ -119,6 +119,20 @@ public class Deck {
             return null;
         }
         return cartes.get(0);
+    }
+
+    /**
+     * Regarde plusieurs cartes du dessus sans les retirer
+     *
+     * @param nombre Le nombre de cartes à regarder
+     * @return Liste des cartes (peut être plus petite si deck insuffisant)
+     */
+    public ArrayList<Carte> regarderPlusieurs(int nombre) {
+        ArrayList<Carte> result = new ArrayList<>();
+        for (int i = 0; i < nombre && i < cartes.size(); i++) {
+            result.add(cartes.get(i));
+        }
+        return result;
     }
 
     /**
