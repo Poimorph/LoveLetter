@@ -1,10 +1,10 @@
 package ui.dialogs;
 
-import modele.Joueur;
+import model.Joueur;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.util.ArrayList;
 
 public class TargetDialog extends JDialog {
 
@@ -12,7 +12,7 @@ public class TargetDialog extends JDialog {
 
     public TargetDialog(
             Window parent,
-            List<Joueur> cibles) {
+            ArrayList<Joueur> cibles) {
 
         super(parent,
               "Choisir une cible",
@@ -50,6 +50,11 @@ public class TargetDialog extends JDialog {
             BorderLayout.NORTH);
 
         this.add(scroll, BorderLayout.CENTER);
+    }
+
+    public Joueur afficher() {
+        this.setVisible(true);
+        return selected;
     }
 
     
