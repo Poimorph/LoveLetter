@@ -181,6 +181,28 @@ public class Partie {
     }
 
     /**
+     * Gère la fin d'une manche et vérifie si la partie est terminée
+     * @return true si la partie est terminée, false sinon
+     */
+    public boolean gererFinManche() {
+        if (mancheActuelle == null || !mancheActuelle.isTerminee()) {
+            return false;
+        }
+
+        // Vérifier si un joueur a atteint le nombre de pions requis
+        ArrayList<Joueur> vainqueursPotentiels = verifierVictoireFinale();
+
+        if (vainqueursPotentiels != null) {
+            // Un ou plusieurs joueurs ont atteint le nombre de pions requis
+            determinerVainqueurFinal(vainqueursPotentiels);
+            terminerPartie();
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Termine la partie
      */
     public void terminerPartie() {

@@ -9,7 +9,7 @@ public class Main {
         // GameController controller = new GameController(ui);
         // ui.setController(controller);
         ui.setVisible(true);
-        ui.launcheGame();
+        // ui.launcheGame();
 
     }
 }

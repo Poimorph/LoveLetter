@@ -16,6 +16,7 @@ public class Manche {
 	private boolean estTerminee;
 	private Joueur premierJoueur;
 	private ArrayList<Joueur> vainqueurs;
+	private ArrayList<String> historique;
 
 	/**
 	 * Constructeur avec liste de joueurs
@@ -30,6 +31,7 @@ public class Manche {
 		this.estTerminee = false;
 		this.joueurActifIndex = 0;
 		this.vainqueurs = new ArrayList<>();
+		this.historique = new ArrayList<>();
 	}
 
 	/**
@@ -101,6 +103,13 @@ public class Manche {
 			System.out.println(action.getCible().getNom() + " est protégé par le réglement et ne peut pas être ciblé.");
 			return;
 		}
+		// Enregistrer l'action dans l'historique
+		String actionTexte = joueurActif.getNom() + " joue " + carte.getNom();
+		if (action.getCible() != null) {
+			actionTexte += " sur " + action.getCible().getNom();
+		}
+		ajouterHistorique(actionTexte);
+
 		// Jouer la carte choisie
 		carte.appliquerEffet(action, this);
 
@@ -188,6 +197,7 @@ public class Manche {
 			return;
 
 		System.out.println(joueur.getNom() + " est éliminé de la manche !");
+		ajouterHistorique(joueur.getNom() + " est éliminé");
 		joueur.eliminer();
 
 		// Vérifier si la manche est terminée (un seul joueur restant)
@@ -516,9 +526,37 @@ public class Manche {
 		return sb.toString();
 	}
 
-	// TODO: Implémenter l'historique des actions
+	/**
+	 * Ajoute une entrée à l'historique des actions
+	 * @param message Le message à ajouter
+	 */
+	public void ajouterHistorique(String message) {
+		if (historique != null && message != null && !message.isEmpty()) {
+			historique.add(message);
+		}
+	}
+
+	/**
+	 * Retourne l'historique des actions sous forme de texte formaté
+	 * @return L'historique des actions
+	 */
 	public String getHistoriqueTexte() {
-		return "";
+		if (historique == null || historique.isEmpty()) {
+			return "Aucune action enregistrée.";
+		}
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < historique.size(); i++) {
+			sb.append((i + 1)).append(". ").append(historique.get(i)).append("\n");
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Retourne l'historique sous forme de liste
+	 * @return Liste des actions
+	 */
+	public ArrayList<String> getHistorique() {
+		return historique;
 	}
 
 	@Override

@@ -29,10 +29,11 @@ public class LoveLetterUI extends JFrame {
         SwingUtilities.invokeLater(() -> {
             new LoveLetterUI().setVisible(true);
         });
+        
     }
 
     public void launcheGame() {
-        controller.Play();
+        controller.boucleJeu();
     }
 
     public PlateauPanel getPlateau() {
