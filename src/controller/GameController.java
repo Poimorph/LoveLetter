@@ -2,6 +2,7 @@ package controller;
 
 import ui.LoveLetterUI;
 import ui.dialogs.ChoixCarteDialog;
+import ui.dialogs.InitNomsDialog;
 import ui.dialogs.InitPartieDialog;
 import ui.dialogs.TargetDialog;
 
@@ -29,7 +30,11 @@ public class GameController {
         InitPartieDialog dialog =
             new InitPartieDialog(ui);
         dialog.afficher();
-        ArrayList<String> noms = dialog.getNomsJoueurs();
+        int nbJoueurs = dialog.getNbJoueurs();
+        InitNomsDialog nomsDialog =
+            new InitNomsDialog(ui, nbJoueurs);
+        nomsDialog.afficher();
+        ArrayList<String> noms = nomsDialog.getNomsJoueurs();
         initialiserPartie(noms);
         boucleJeu();
         ui.refresh();
