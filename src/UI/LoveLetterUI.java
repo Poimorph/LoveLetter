@@ -12,7 +12,7 @@ public class LoveLetterUI extends JFrame {
 
     public LoveLetterUI() {
         this.setTitle("Love Letter");
-        this.setSize(1000, 700);
+        this.setSize(1000, 750);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // controller = new GameController(this);
@@ -37,10 +37,6 @@ public class LoveLetterUI extends JFrame {
         plateau = new PlateauPanel(controller);
 
         this.setContentPane(plateau);
-    }
-
-    public void launcheGame() {
-        controller.boucleJeu();
     }
 
     public PlateauPanel getPlateau() {

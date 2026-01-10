@@ -1,6 +1,7 @@
 package ui.views;
 
 import controller.GameController;
+import ui.dialogs.ReglesDialog;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -170,59 +171,8 @@ public class PlateauPanel extends JPanel {
     }
 
     private void afficherRegles() {
-        String regles = """
-                === LOVE LETTER - Règles ===
-
-                But: Être le dernier joueur en lice ou avoir la carte
-                de plus haute valeur quand le deck est vide.
-
-                Tour de jeu:
-                1. Piochez une carte
-                2. Jouez une de vos deux cartes
-                3. Appliquez son effet
-
-                Cartes (de 0 à 9):
-                0 - Le B2: Le B2 peut etre un très bon attout pour avoir\n\
-                son dossier accepté. A mois que d'autres joueurs ne\n\
-                pensent la même chose... (si vous etes le seul à avoir\n\
-                cette carte à la fin de la manche, vous gagnez \n\
-                automatiquement un pion)
-                1 - Exam: Essayez de deviner la carte d'un adversaire.\nRéussissez, et il est éliminé!
-                2 - Tuteur: le Tuteur peut suivre les dossiers des \nétudiants (voir leur carte).
-                3 - Jury: le Jury est redoutable, il compare les dossiers\n\
-                des étudiants. Le plus faible est viré. (comparez la valeur\n\
-                de votre main avec celle d'un adversaire, le plus faible est éliminé)
-                4 - RDE: le Règlement des études est votre plus grand allié, \n\
-                il vous protège. (Protection jusqu'au prochain tour)
-                5 - Bug Info: le numérique, c'est pratique. Jusqu'à ce qu'un \n\
-                bug arrive. (Choisissez un Joueur(y compris vous-même) pour qu'il\n\
-                défausse sa main et pioche une nouvelle carte)
-                6 - Ancien Élève: L'ancien élève ou alumni connaît bien l'université.\n\
-                Et il peux vous aider à booster votre dossier. (Vous piochez 2 cartes,\n\
-                vous choississez laquelle garder (entre votre main et les cartes piochées)\n\
-                et remettez les autres en dessous du deck)
-                7 - Directeur: Le directeur est puissant. Il peut changer comment votre\n\
-                dossier est traité. (Échangez votre main avec celle d'un autre joueur \n\
-                de votre choix)
-                8 - Learning Agreement: Le document le plus important pour votre SEE. \n\
-                Mais attention au directeur et aux bugs informatiques! (Échangez votre \n\
-                main avec une carte piochée du deck)
-                9 - Gestionnaire SEE: La personne qui aura le dernier mot sur votre dossier.\n\
-                Gare à ne pas s'attirer les foudres de cette-dernière (Si vous avez cette \n\
-                carte à la fin de la manche, vous gagnez automatiquement un pion. Défaussez-la \n\
-                est perdez immédiatement la manche!).
-
-                Victoire: Premier à atteindre le nombre de pions requis!
-                """;
-
-        JTextArea textArea = new JTextArea(regles);
-        textArea.setEditable(false);
-        textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(600, 350));
-
-        JOptionPane.showMessageDialog(this, scrollPane, "Règles du jeu",
-                JOptionPane.INFORMATION_MESSAGE);
+        ReglesDialog dialog = new ReglesDialog(SwingUtilities.getWindowAncestor(this));
+        dialog.afficher();
     }
 
     public void updateFromModel() {

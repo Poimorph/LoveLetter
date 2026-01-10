@@ -19,7 +19,7 @@ public class HandPanel extends JPanel {
         this.controller = c;
         setLayout(new BorderLayout(10, 5));
         setBackground(BACKGROUND_COLOR);
-        setPreferredSize(new Dimension(0, 220));
+        setPreferredSize(new Dimension(0, 250));
 
         // Label du joueur actif
         joueurLabel = new JLabel("En attente d'une partie...");

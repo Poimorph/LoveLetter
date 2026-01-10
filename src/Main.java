@@ -1,7 +1,6 @@
 
 import controller.GameController;
 import ui.LoveLetterUI;
-import model.Partie;
 
 public class Main {
     public static void main(String[] args) {
