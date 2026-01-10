@@ -110,7 +110,7 @@ public class Partie {
         manches.add(mancheActuelle);
         for (Joueur j : joueurs) {
             // Distribuer une carte à chaque joueur
-            j.getMain().ajouterCarte(mancheActuelle.getDeck().piocher());
+            // j.getMain().ajouterCarte(mancheActuelle.getDeck().piocher());
         }
     }
 
@@ -182,6 +182,7 @@ public class Partie {
 
     /**
      * Gère la fin d'une manche et vérifie si la partie est terminée
+     * 
      * @return true si la partie est terminée, false sinon
      */
     public boolean gererFinManche() {

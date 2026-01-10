@@ -37,8 +37,8 @@ public class CartesTest {
 
     @Test
     public void testExam_DevinettCorrect() {
-        bob.recevoirCarte(new TuteurPedagogique());
         bob.reinitialiser();
+        bob.recevoirCarte(new TuteurPedagogique());
 
         Exam exam = new Exam();
         ActionJoueur action = new ActionJoueur(alice, exam, bob, TypeCarte.TUTEUR_PEDAGOGIQUE);

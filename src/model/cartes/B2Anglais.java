@@ -2,7 +2,6 @@ package model.cartes;
 
 import model.ActionJoueur;
 import model.Carte;
-import model.Joueur;
 import model.Manche;
 import model.TypeCarte;
 

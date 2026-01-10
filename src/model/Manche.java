@@ -98,11 +98,6 @@ public class Manche {
 		// Lever la protection du joueur au début de son tour
 		joueurActif.leverProtection();
 
-		// On verifie si le joueur cible est protégé
-		if (action.getCible() != null && action.getCible().isProtege()) {
-			System.out.println(action.getCible().getNom() + " est protégé par le réglement et ne peut pas être ciblé.");
-			return;
-		}
 		// Enregistrer l'action dans l'historique
 		String actionTexte = joueurActif.getNom() + " joue " + carte.getNom();
 		if (action.getCible() != null) {
@@ -110,11 +105,17 @@ public class Manche {
 		}
 		ajouterHistorique(actionTexte);
 
-		// Jouer la carte choisie
-		carte.appliquerEffet(action, this);
-
-		// on défausse la carte jouée
+		// IMPORTANT: Toujours retirer la carte de la main, même si l'effet est annulé
 		joueurActif.getMain().retirerCarte(carte);
+
+		// On vérifie si le joueur cible est protégé (l'effet est annulé mais la carte est jouée)
+		if (action.getCible() != null && action.getCible().isProtege()) {
+			System.out.println(action.getCible().getNom() + " est protégé par le règlement. L'effet est annulé.");
+			return;
+		}
+
+		// Appliquer l'effet de la carte
+		carte.appliquerEffet(action, this);
 
 		// Vérifier si la manche est terminée après la pioche
 		if (verifierFinManche()) {
@@ -528,6 +529,7 @@ public class Manche {
 
 	/**
 	 * Ajoute une entrée à l'historique des actions
+	 * 
 	 * @param message Le message à ajouter
 	 */
 	public void ajouterHistorique(String message) {
@@ -538,6 +540,7 @@ public class Manche {
 
 	/**
 	 * Retourne l'historique des actions sous forme de texte formaté
+	 * 
 	 * @return L'historique des actions
 	 */
 	public String getHistoriqueTexte() {
@@ -553,6 +556,7 @@ public class Manche {
 
 	/**
 	 * Retourne l'historique sous forme de liste
+	 * 
 	 * @return Liste des actions
 	 */
 	public ArrayList<String> getHistorique() {
