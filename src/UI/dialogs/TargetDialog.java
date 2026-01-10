@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class TargetDialog extends JDialog {
 
-    private static final Color BUTTON_COLOR = new Color(70, 130, 180);
-    private static final Color BUTTON_HOVER = new Color(100, 149, 237);
-    private static final Color BACKGROUND = new Color(240, 248, 255);
+    private static final Color BUTTON_COLOR = new Color(40, 70, 45);
+    private static final Color BUTTON_HOVER = new Color(180, 100, 40);
+    private static final Color BACKGROUND = new Color(245, 245, 220);
 
     private Joueur selected;
 

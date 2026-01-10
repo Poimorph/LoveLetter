@@ -28,40 +28,6 @@ public class GameController {
     public GameController() {
     }
 
-    public void Play() {
-        InitPartieDialog dialog = new InitPartieDialog(ui);
-        dialog.afficher();
-        int nbJoueurs = dialog.getNbJoueurs();
-        InitNomsDialog nomsDialog = new InitNomsDialog(ui, nbJoueurs);
-        nomsDialog.afficher();
-        ArrayList<String> noms = nomsDialog.getNomsJoueurs();
-        initialiserPartie(noms);
-        boucleJeu();
-        ui.refresh();
-    }
-
-    public void boucleJeu() {
-        while (!partie.estTerminee()) {
-            manche = partie.getMancheActuelle();
-            while (!manche.isTerminee()) {
-                Joueur actif = manche.getJoueurActif();
-                actif.getMain().ajouterCarte(manche.getDeck().piocher());
-                ChoixCarteDialog choixCarteDialog = new ChoixCarteDialog(
-                        ui,
-                        "Choisir une carte à jouer, "
-                                + actif.getNom(),
-                        actif.getMain().getNomsCartesJouables());
-                int indexChoisi = choixCarteDialog.afficher();
-                jouerCarte(actif, indexChoisi);
-                manche.passerAuJoueurSuivant();
-                ui.refresh();
-                showMaskForPlayer(actif);
-            }
-            partie.lancerNouvelleManche();
-        }
-
-    }
-
     public void initialiserPartie(ArrayList<String> noms) {
         partie = Partie.getInstance(noms.size());
         partie.initialiser(noms);
@@ -125,6 +91,14 @@ public class GameController {
             action.setCarteGardeeIndex(choixCarte);
         }
         manche.jouerTour(action);
+
+        // Afficher la carte de la cible si Tuteur Pédagogique (valeur 2)
+        if (carte.getValeur() == 2 && cible != null && !cible.isProtege() && !cible.getMain().estVide()) {
+            Carte carteCible = cible.getMain().getCarte(0);
+            VoirCarteDialog dialog = new VoirCarteDialog(ui, cible, carteCible);
+            dialog.afficher();
+        }
+
         verifierEtatJeu();
     }
 
