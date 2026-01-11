@@ -56,11 +56,13 @@ public class GameController {
         Joueur actif = manche.getJoueurActif();
         if (manche.getDeck().getNombreCartesRestantes() > 0) {
             actif.getMain().ajouterCarte(manche.getDeck().piocher());
-        } else {
-            Carte carteJeu = manche.getCarteCachee();
-            if (carteJeu != null)
-                actif.getMain().ajouterCarte(carteJeu);
         }
+        // Carte cachée désactivée pour le moment
+        // else {
+        //     Carte carteJeu = manche.getCarteCachee();
+        //     if (carteJeu != null)
+        //         actif.getMain().ajouterCarte(carteJeu);
+        // }
         ui.refresh();
         showMaskForPlayer(actif);
     }
@@ -71,7 +73,6 @@ public class GameController {
 
     /**
      * Appelée par CardButton quand on clique sur une carte.
-     * C'est la suite de la "boucle".
      */
     public void jouerCarte(Joueur joueur, int indexMain) {
         if (!joueur.equals(manche.getJoueurActif())) {

@@ -108,6 +108,9 @@ public class Manche {
 		// IMPORTANT: Toujours retirer la carte de la main, même si l'effet est annulé
 		joueurActif.getMain().retirerCarte(carte);
 
+		// Ajouter la carte aux cartes jouées du joueur (pour l'affichage)
+		joueurActif.getCartesJouees().add(carte);
+
 		// On vérifie si le joueur cible est protégé (l'effet est annulé mais la carte est jouée)
 		if (action.getCible() != null && action.getCible().isProtege()) {
 			System.out.println(action.getCible().getNom() + " est protégé par le règlement. L'effet est annulé.");
@@ -122,53 +125,6 @@ public class Manche {
 			terminerManche();
 		}
 	}
-
-	// /**
-	// * Fait jouer une carte au joueur actif
-	// *
-	// * @param indexCarte L'index de la carte à jouer dans la main
-	// * @param cible Le joueur ciblé (peut être null)
-	// */
-	// public void jouerCarte(int indexCarte, Joueur cible) {
-	// Joueur joueurActif = getJoueurActif();
-	// if (joueurActif == null)
-	// return;
-
-	// MainJoueur main = joueurActif.getMain();
-	// if (main == null || indexCarte < 0 || indexCarte >= main.getNombreCartes()) {
-	// System.out.println("Index de carte invalide.");
-	// return;
-	// }
-
-	// // Vérifier la contrainte LA
-	// ArrayList<Integer> indicesJouables = main.getIndicesCartesJouables();
-	// if (!indicesJouables.contains(indexCarte)) {
-	// System.out.println("Vous devez jouer le Learning Agreement !");
-	// return;
-	// }
-
-	// // Retirer et jouer la carte
-	// Carte carte = main.retirerCarte(indexCarte);
-	// if (carte != null) {
-	// System.out.println(joueurActif.getNom() + " joue " + carte.getNom());
-
-	// // Ajouter aux cartes jouées du joueur
-	// joueurActif.getCartesJouees().add(carte);
-
-	// // Ajouter à la défausse
-	// deck.ajouterDansDefausse(carte);
-
-	// // Appliquer l'effet
-	// carte.appliquerEffet(joueurActif, cible, this);
-	// }
-
-	// // Vérifier si la manche est terminée
-	// if (verifierFinManche()) {
-	// terminerManche();
-	// } else {
-	// passerAuJoueurSuivant();
-	// }
-	// }
 
 	/**
 	 * Passe au joueur suivant
@@ -461,19 +417,19 @@ public class Manche {
 		return deck;
 	}
 
-	/**
-	 * Retourne la carte cachée
-	 */
-	public Carte getCarteCachee() {
-		return deck.getCarteCachee();
-	}
+	// /**
+	//  * Retourne la carte cachée
+	//  */
+	// public Carte getCarteCachee() {
+	// 	return deck.getCarteCachee();
+	// }
 
-	/**
-	 * Retourne les cartes visibles (parties à 2 joueurs)
-	 */
-	public ArrayList<Carte> getCartesVisibles() {
-		return deck.getCartesVisibles();
-	}
+	// /**
+	//  * Retourne les cartes visibles (parties à 2 joueurs)
+	//  */
+	// public ArrayList<Carte> getCartesVisibles() {
+	// 	return deck.getCartesVisibles();
+	// }
 
 	/**
 	 * Vérifie si la manche est terminée

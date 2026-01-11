@@ -108,10 +108,7 @@ public class Partie {
         mancheActuelle = new Manche(joueurs, premierJoueur);
         mancheActuelle.initialiser();
         manches.add(mancheActuelle);
-        for (Joueur j : joueurs) {
-            // Distribuer une carte à chaque joueur
-            // j.getMain().ajouterCarte(mancheActuelle.getDeck().piocher());
-        }
+
     }
 
     /**

@@ -47,31 +47,32 @@ public class CarteFactory {
 				throw new IllegalArgumentException("Type de carte inconnu : " + type);
 		}
 	}
+
 	public static Carte creerCarte(int valeur) {
-	    switch (valeur) {
-	        case 0:
-	            return creerCarte(TypeCarte.B2_ANGLAIS);
-	        case 1:
-	            return creerCarte(TypeCarte.EXAM);
-	        case 2:
-	            return creerCarte(TypeCarte.TUTEUR_PEDAGOGIQUE);
-	        case 3:
-	            return creerCarte(TypeCarte.JURY);
-	        case 4:
-	            return creerCarte(TypeCarte.RDE);
-	        case 5:
-	            return creerCarte(TypeCarte.BUG_INFORMATIQUE);
-	        case 6:
-	            return creerCarte(TypeCarte.ANCIEN);
-	        case 7:
-	            return creerCarte(TypeCarte.DIRLO);
-	        case 8:
-	            return creerCarte(TypeCarte.LA);
-	        case 9:
-	            return creerCarte(TypeCarte.GESTIONNAIRE_SEE);
-	        default:
-	            throw new IllegalArgumentException("Valeur de carte inconnue : " + valeur);
-	    }
+		switch (valeur) {
+			case 0:
+				return creerCarte(TypeCarte.B2_ANGLAIS);
+			case 1:
+				return creerCarte(TypeCarte.EXAM);
+			case 2:
+				return creerCarte(TypeCarte.TUTEUR_PEDAGOGIQUE);
+			case 3:
+				return creerCarte(TypeCarte.JURY);
+			case 4:
+				return creerCarte(TypeCarte.RDE);
+			case 5:
+				return creerCarte(TypeCarte.BUG_INFORMATIQUE);
+			case 6:
+				return creerCarte(TypeCarte.ANCIEN);
+			case 7:
+				return creerCarte(TypeCarte.DIRLO);
+			case 8:
+				return creerCarte(TypeCarte.LA);
+			case 9:
+				return creerCarte(TypeCarte.GESTIONNAIRE_SEE);
+			default:
+				throw new IllegalArgumentException("Valeur de carte inconnue : " + valeur);
+		}
 	}
 
 	/**
@@ -119,7 +120,6 @@ public class CarteFactory {
 
 		// 1x Gestionnaire SEE (Princesse - valeur 9)
 		deck.add(creerCarte(TypeCarte.GESTIONNAIRE_SEE));
-
 		return deck;
 	}
 

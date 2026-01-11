@@ -27,20 +27,16 @@ public class DeckTest {
     public void testPreparerPourManche2Joueurs() {
         deck.preparerPourManche(2);
 
-        // 21 cartes - 1 cachée - 3 visibles = 17 cartes restantes
-        assertEquals(17, deck.getNombreCartesRestantes());
-        assertNotNull(deck.getCarteCachee());
-        assertEquals(3, deck.getCartesVisibles().size());
+        // 21 cartes (carte cachée et cartes visibles désactivées pour le moment)
+        assertEquals(21, deck.getNombreCartesRestantes());
     }
 
     @Test
     public void testPreparerPourManche4Joueurs() {
         deck.preparerPourManche(4);
 
-        // 21 cartes - 1 cachée = 20 cartes restantes
-        assertEquals(20, deck.getNombreCartesRestantes());
-        assertNotNull(deck.getCarteCachee());
-        assertEquals(0, deck.getCartesVisibles().size());
+        // 21 cartes (carte cachée désactivée pour le moment)
+        assertEquals(21, deck.getNombreCartesRestantes());
     }
 
     @Test
@@ -68,26 +64,27 @@ public class DeckTest {
         assertEquals(16, deck.getNombreCartesRestantes());
     }
 
-    @Test
-    public void testCacherCarte() {
-        deck.initialiser();
+    // Tests désactivés car carte cachée commentée pour le moment
+    // @Test
+    // public void testCacherCarte() {
+    //     deck.initialiser();
+    //
+    //     deck.cacherCarte();
+    //
+    //     assertNotNull(deck.getCarteCachee());
+    //     assertEquals(20, deck.getNombreCartesRestantes());
+    // }
 
-        deck.cacherCarte();
-
-        assertNotNull(deck.getCarteCachee());
-        assertEquals(20, deck.getNombreCartesRestantes());
-    }
-
-    @Test
-    public void testPiocherCarteCachee() {
-        deck.initialiser();
-        deck.cacherCarte();
-
-        Carte cachee = deck.piocherCarteCachee();
-
-        assertNotNull(cachee);
-        assertNull(deck.getCarteCachee());
-    }
+    // @Test
+    // public void testPiocherCarteCachee() {
+    //     deck.initialiser();
+    //     deck.cacherCarte();
+    //
+    //     Carte cachee = deck.piocherCarteCachee();
+    //
+    //     assertNotNull(cachee);
+    //     assertNull(deck.getCarteCachee());
+    // }
 
     @Test
     public void testAjouterDansDefausse() {
@@ -192,9 +189,6 @@ public class DeckTest {
 
         // Les deux listes doivent avoir la même taille
         assertEquals(avant.size(), apres.size());
-
-        // Note : Il y a une très faible probabilité que l'ordre reste identique
-        // après mélange, mais ce test n'est pas déterministe
     }
 
     @Test
@@ -207,7 +201,7 @@ public class DeckTest {
 
         ArrayList<Carte> cartesPubliques = deck.getCartesPubliques();
 
-        // 3 visibles + 1 défausse = 4 cartes publiques
-        assertEquals(4, cartesPubliques.size());
+        // 1 défausse (cartes visibles désactivées pour le moment)
+        assertEquals(1, cartesPubliques.size());
     }
 }

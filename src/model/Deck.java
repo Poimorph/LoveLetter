@@ -6,14 +6,14 @@ public class Deck {
 
     private ArrayList<Carte> cartes;
     private ArrayList<Carte> defausse;
-    private Carte carteCachee;
-    private ArrayList<Carte> cartesVisibles; // Pour les parties à 2 joueurs
+    // private Carte carteCachee;
+    // private ArrayList<Carte> cartesVisibles; // Pour les parties à 2 joueurs
 
     public Deck() {
         this.cartes = new ArrayList<>();
         this.defausse = new ArrayList<>();
-        this.carteCachee = null;
-        this.cartesVisibles = new ArrayList<>();
+        // this.carteCachee = null;
+        // this.cartesVisibles = new ArrayList<>();
     }
 
     // ==================== INITIALISATION ====================
@@ -24,8 +24,8 @@ public class Deck {
     public void initialiser() {
         cartes.clear();
         defausse.clear();
-        carteCachee = null;
-        cartesVisibles.clear();
+        // carteCachee = null;
+        // cartesVisibles.clear();
 
         // Création des 21 cartes via la factory
         cartes = CarteFactory.creerDeckComplet();
@@ -38,31 +38,31 @@ public class Deck {
         Collections.shuffle(cartes);
     }
 
-    /**
-     * Cache une carte du dessus du deck (règle Love Letter)
-     * Cette carte ne sera pas utilisée pendant la manche
-     */
-    public void cacherCarte() {
-        if (!cartes.isEmpty()) {
-            carteCachee = cartes.remove(0);
-        }
-    }
+    // /**
+    // * Cache une carte du dessus du deck (règle Love Letter)
+    // * Cette carte ne sera pas utilisée pendant la manche
+    // */
+    // public void cacherCarte() {
+    // if (!cartes.isEmpty()) {
+    // carteCachee = cartes.remove(0);
+    // }
+    // }
 
-    /**
-     * Met des cartes visibles sur le côté (règle pour 2 joueurs)
-     * 
-     * @param nombre Le nombre de cartes à mettre de côté face visible
-     */
-    public void mettreCartesVisibles(int nombre) {
-        cartesVisibles.clear();
-        for (int i = 0; i < nombre && !cartes.isEmpty(); i++) {
-            cartesVisibles.add(cartes.remove(0));
-        }
-    }
+    // /**
+    // * Met des cartes visibles sur le côté (règle pour 2 joueurs)
+    // *
+    // * @param nombre Le nombre de cartes à mettre de côté face visible
+    // */
+    // public void mettreCartesVisibles(int nombre) {
+    // cartesVisibles.clear();
+    // for (int i = 0; i < nombre && !cartes.isEmpty(); i++) {
+    // cartesVisibles.add(cartes.remove(0));
+    // }
+    // }
 
     /**
      * Prépare le deck pour une manche selon le nombre de joueurs
-     * 
+     *
      * @param nombreJoueurs Le nombre de joueurs dans la partie
      */
     public void preparerPourManche(int nombreJoueurs) {
@@ -72,13 +72,13 @@ public class Deck {
         // 2. Mélanger
         melanger();
 
-        // 3. Cacher une carte face cachée
-        cacherCarte();
+        // 3. Cacher une carte face cachée (désactivé pour le moment)
+        // cacherCarte();
 
-        // 4. Pour 2 joueurs, mettre 3 cartes face visible
-        if (nombreJoueurs == 2) {
-            mettreCartesVisibles(3);
-        }
+        // 4. Pour 2 joueurs, mettre 3 cartes face visible (désactivé pour le moment)
+        // if (nombreJoueurs == 2) {
+        // mettreCartesVisibles(3);
+        // }
     }
 
     // ==================== PIOCHE ====================
@@ -135,17 +135,17 @@ public class Deck {
         return result;
     }
 
-    /**
-     * Pioche la carte cachée (utilisé en fin de manche si deck vide et un seul
-     * joueur restant)
-     * 
-     * @return La carte cachée
-     */
-    public Carte piocherCarteCachee() {
-        Carte carte = carteCachee;
-        carteCachee = null;
-        return carte;
-    }
+    // /**
+    // * Pioche la carte cachée (utilisé en fin de manche si deck vide et un seul
+    // * joueur restant)
+    // *
+    // * @return La carte cachée
+    // */
+    // public Carte piocherCarteCachee() {
+    // Carte carte = carteCachee;
+    // carteCachee = null;
+    // return carte;
+    // }
 
     // ==================== DÉFAUSSE ====================
 
@@ -256,19 +256,19 @@ public class Deck {
         return new ArrayList<>(defausse);
     }
 
-    /**
-     * Retourne la carte cachée
-     */
-    public Carte getCarteCachee() {
-        return carteCachee;
-    }
+    // /**
+    // * Retourne la carte cachée
+    // */
+    // public Carte getCarteCachee() {
+    // return carteCachee;
+    // }
 
-    /**
-     * Retourne les cartes visibles (partie à 2 joueurs)
-     */
-    public ArrayList<Carte> getCartesVisibles() {
-        return new ArrayList<>(cartesVisibles);
-    }
+    // /**
+    // * Retourne les cartes visibles (partie à 2 joueurs)
+    // */
+    // public ArrayList<Carte> getCartesVisibles() {
+    // return new ArrayList<>(cartesVisibles);
+    // }
 
     /**
      * Retourne le nombre de cartes dans la défausse
@@ -281,77 +281,75 @@ public class Deck {
 
     /**
      * Retourne les cartes qui ont été jouées ou défaussées (information publique)
-     * Combine les cartes visibles et la défausse
      */
     public ArrayList<Carte> getCartesPubliques() {
         ArrayList<Carte> cartesPubliques = new ArrayList<>();
         cartesPubliques.addAll(defausse);
-        cartesPubliques.addAll(cartesVisibles);
+        // cartesPubliques.addAll(cartesVisibles);
         return cartesPubliques;
     }
 
-    /**
-     * Calcule les cartes possiblement encore en jeu
-     * (utile pour l'aide au joueur ou l'IA)
-     * 
-     * @return Map avec le type de carte et le nombre possiblement restant
-     */
-    public String analyserCartesRestantes() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("=== ANALYSE DES CARTES ===\n");
+    // /**
+    // * Calcule les cartes possiblement encore en jeu
+    // *
+    // * @return Map avec le type de carte et le nombre possiblement restant
+    // */
+    // public String analyserCartesRestantes() {
+    // StringBuilder sb = new StringBuilder();
+    // sb.append("=== ANALYSE DES CARTES ===\n");
+    //
+    // // Compter les cartes déjà vues (défausse + visibles)
+    // ArrayList<Carte> cartesVues = getCartesPubliques();
+    //
+    // for (TypeCarte type : TypeCarte.values()) {
+    // int totalOriginal = compterCartesOriginales(type);
+    // int vues = 0;
+    //
+    // for (Carte carte : cartesVues) {
+    // if (carte.getType() == type) {
+    // vues++;
+    // }
+    // }
+    //
+    // int restantes = totalOriginal - vues;
+    // if (totalOriginal > 0) {
+    // sb.append(String.format("%s : %d/%d possiblement en jeu\n",
+    // type.name(), restantes, totalOriginal));
+    // }
+    // }
+    //
+    // return sb.toString();
+    // }
 
-        // Compter les cartes déjà vues (défausse + visibles)
-        ArrayList<Carte> cartesVues = getCartesPubliques();
-
-        for (TypeCarte type : TypeCarte.values()) {
-            int totalOriginal = compterCartesOriginales(type);
-            int vues = 0;
-
-            for (Carte carte : cartesVues) {
-                if (carte.getType() == type) {
-                    vues++;
-                }
-            }
-
-            int restantes = totalOriginal - vues;
-            if (totalOriginal > 0) {
-                sb.append(String.format("%s : %d/%d possiblement en jeu\n",
-                        type.name(), restantes, totalOriginal));
-            }
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * Retourne le nombre original de cartes d'un type dans le deck complet
-     */
-    private int compterCartesOriginales(TypeCarte type) {
-        switch (type) {
-            case GESTIONNAIRE_SEE:
-                return 1;
-            case LA:
-                return 1;
-            case DIRLO:
-                return 1;
-            case ANCIEN:
-                return 2;
-            case BUG_INFORMATIQUE:
-                return 2;
-            case RDE:
-                return 2;
-            case JURY:
-                return 2;
-            case TUTEUR_PEDAGOGIQUE:
-                return 2;
-            case EXAM:
-                return 6;
-            case B2_ANGLAIS:
-                return 2;
-            default:
-                return 0;
-        }
-    }
+    // /**
+    // * Retourne le nombre original de cartes d'un type dans le deck complet
+    // */
+    // private int compterCartesOriginales(TypeCarte type) {
+    // switch (type) {
+    // case GESTIONNAIRE_SEE:
+    // return 1;
+    // case LA:
+    // return 1;
+    // case DIRLO:
+    // return 1;
+    // case ANCIEN:
+    // return 2;
+    // case BUG_INFORMATIQUE:
+    // return 2;
+    // case RDE:
+    // return 2;
+    // case JURY:
+    // return 2;
+    // case TUTEUR_PEDAGOGIQUE:
+    // return 2;
+    // case EXAM:
+    // return 6;
+    // case B2_ANGLAIS:
+    // return 2;
+    // default:
+    // return 0;
+    // }
+    // }
 
     // ==================== DISTRIBUTION ====================
 
@@ -396,15 +394,15 @@ public class Deck {
         sb.append("=== ÉTAT DU DECK ===\n");
         sb.append("Cartes restantes : ").append(cartes.size()).append("\n");
         sb.append("Cartes en défausse : ").append(defausse.size()).append("\n");
-        sb.append("Carte cachée : ").append(carteCachee != null ? "Oui" : "Non").append("\n");
+        // sb.append("Carte cachée : ").append(carteCachee != null ? "Oui" : "Non").append("\n");
 
-        if (!cartesVisibles.isEmpty()) {
-            sb.append("Cartes visibles (2 joueurs) : ");
-            for (Carte carte : cartesVisibles) {
-                sb.append(carte.getNom()).append(" ");
-            }
-            sb.append("\n");
-        }
+        // if (!cartesVisibles.isEmpty()) {
+        //     sb.append("Cartes visibles (2 joueurs) : ");
+        //     for (Carte carte : cartesVisibles) {
+        //         sb.append(carte.getNom()).append(" ");
+        //     }
+        //     sb.append("\n");
+        // }
 
         return sb.toString();
     }
@@ -429,24 +427,24 @@ public class Deck {
         return sb.toString();
     }
 
-    /**
-     * Affiche les cartes visibles (partie à 2 joueurs)
-     */
-    public String afficherCartesVisibles() {
-        if (cartesVisibles.isEmpty()) {
-            return "Pas de cartes visibles";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("=== CARTES ÉCARTÉES (VISIBLES) ===\n");
-
-        for (Carte carte : cartesVisibles) {
-            sb.append("- ").append(carte.getNom())
-                    .append(" (Valeur: ").append(carte.getValeur()).append(")\n");
-        }
-
-        return sb.toString();
-    }
+    // /**
+    //  * Affiche les cartes visibles (partie à 2 joueurs)
+    //  */
+    // public String afficherCartesVisibles() {
+    //     if (cartesVisibles.isEmpty()) {
+    //         return "Pas de cartes visibles";
+    //     }
+    //
+    //     StringBuilder sb = new StringBuilder();
+    //     sb.append("=== CARTES ÉCARTÉES (VISIBLES) ===\n");
+    //
+    //     for (Carte carte : cartesVisibles) {
+    //         sb.append("- ").append(carte.getNom())
+    //                 .append(" (Valeur: ").append(carte.getValeur()).append(")\n");
+    //     }
+    //
+    //     return sb.toString();
+    // }
 
     @Override
     public String toString() {

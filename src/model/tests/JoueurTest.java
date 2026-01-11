@@ -59,7 +59,7 @@ public class JoueurTest {
         Carte gestionnaire = new GestionnaireSEE();
         joueur.recevoirCarte(gestionnaire);
 
-        assertEquals(8, joueur.getValeurMain());
+        assertEquals(9, joueur.getValeurMain());
     }
 
     @Test

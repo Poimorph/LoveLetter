@@ -47,9 +47,9 @@ public class BugInformatique extends Carte {
 		Carte nouvelleCarte = deck.piocher();
 
 		// Si le deck est vide, piocher la carte cachée
-		if (nouvelleCarte == null) {
-			nouvelleCarte = deck.piocherCarteCachee();
-		}
+		// if (nouvelleCarte == null) {
+		// nouvelleCarte = deck.piocherCarteCachee();
+		// }
 
 		if (nouvelleCarte != null) {
 			cibleEffective.recevoirCarte(nouvelleCarte);
